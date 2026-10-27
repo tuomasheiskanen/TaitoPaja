@@ -10,6 +10,7 @@
     "noUnusedParameters": true,
     "noEmit": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "types": ["node", "vite/client", "vite-plugin-pwa/client"]
   },
   "include": ["src", "vite.config.ts", "pwa-assets.config.ts"]

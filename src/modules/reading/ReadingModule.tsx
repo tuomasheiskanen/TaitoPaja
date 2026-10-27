@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { stopSpeech, warmUpVoices } from '../../shared/speech';
+import { warmUpVoices } from '../../shared/speech';
 import { confetti } from '../../shared/fx';
 import { buildOptions, buildPool, pickCard } from './data';
-import { speakCard } from './speak';
+import { preloadCard, speakCard, stopAll } from './speak';
 import { loadSettings, saveSettings, type ReadingSettings } from './settings';
 import Picker from './Picker';
 import Letters from './Letters';
@@ -33,6 +33,7 @@ export default function ReadingModule() {
     const item = pickCard(pools, s.misses, lastRef.current);
     if (!item) return;
     lastRef.current = item.text;
+    preloadCard(item);
     setRound({ item, options: s.mode === 'child' ? buildOptions(item, pools) : [], solved: false, wrong: [] });
     setScreen('quiz');
     if (s.mode === 'child' && AUTO_PLAY) setTimeout(() => speakCard(item), 350);
@@ -45,7 +46,7 @@ export default function ReadingModule() {
     });
 
   const stop = () => {
-    stopSpeech();
+    stopAll();
     setScreen('picker');
   };
 

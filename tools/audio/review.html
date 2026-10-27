@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio Review</title>
+<style>
+  :root { --bg: #f6f6f8; --card: #fff; --ink: #1a1d29; --muted: #6b7080; --line: #e2e3e8; --pick: #1f8f5f; --none: #c0392b; --manual: #7a4dd8; --focus: #2b6cdf; --flag: #e06c00; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  header { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  h1 { font-size: 17px; margin: 0; }
+  .progress { color: var(--muted); }
+  .filters button, .filters select { font: inherit; padding: 4px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
+  .filters button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .keys { color: var(--muted); font-size: 13px; width: 100%; }
+  kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; font-size: 12px; background: #fff; }
+  main { padding: 12px 16px 80px; display: flex; flex-direction: column; gap: 8px; max-width: 1100px; }
+  .row { background: var(--card); border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+  .row.focus { border-color: var(--focus); }
+  .row.done-voice { border-left: 8px solid var(--pick); }
+  .row.done-none { border-left: 8px solid var(--none); }
+  .row.done-manual { border-left: 8px solid var(--manual); }
+  .text { font-size: 28px; font-weight: 700; letter-spacing: .03em; }
+  .meta { color: var(--muted); font-size: 12px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .opt { font: inherit; border: 2px solid var(--line); background: #fff; border-radius: 10px; padding: 6px 10px; cursor: pointer; min-width: 96px; text-align: left; position: relative; }
+  .opt .k { color: var(--muted); font-size: 12px; margin-right: 4px; }
+  .opt.playing { border-color: var(--focus); }
+  .opt.chosen { border-color: var(--pick); background: #e7f6ee; }
+  .opt.none.chosen { border-color: var(--none); background: #fbe9e7; }
+  .opt.manual.chosen { border-color: var(--manual); background: #f0eafd; }
+  .opt .dot { position: absolute; top: 4px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--flag); }
+  .opt.rec { border-color: var(--none); color: var(--none); }
+  .voice { display: flex; flex-direction: column; gap: 4px; }
+  .use { font: inherit; font-size: 12px; border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 2px 8px; cursor: pointer; color: var(--muted); }
+  .use.chosen { background: var(--pick); border-color: var(--pick); color: #fff; }
+  .opt.heard { border-color: #9db8ec; }
+  @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Audio review</h1>
+  <span class="progress" id="progress"></span>
+  <span class="filters">
+    <button data-f="todo" class="on">To review</button>
+    <button data-f="none">None good</button>
+    <button data-f="all">All</button>
+    <select id="type"><option value="">All types</option><option>letter</option><option>open</option><option>long</option><option>closed</option><option>word</option></select>
+  </span>
+  <div class="keys">
+    <kbd>1</kbd>–<kbd>9</kbd> play a voice · <kbd>Enter</kbd> use the voice you played last · <kbd>0</kbd> none good · <kbd>R</kbd> record own (again to stop) ·
+    <kbd>M</kbd> play own · <kbd>↓</kbd>/<kbd>J</kbd> next · <kbd>↑</kbd>/<kbd>K</kbd> previous · <kbd>Space</kbd> replay ·
+    <kbd>Backspace</kbd> clear. Orange dot = automatic check flagged it.
+  </div>
+</header>
+<main id="list"></main>
+<script>
+// Rows reviewed in this session stay in the "To review" list so voices can still be compared.
+const touched = new Set();
+let lastPlayed = {}; // card id → voice played most recently
+let D, filter = 'todo', type = '', focus = 0, rows = [], audio = new Audio(), recorder = null;
+
+async function load() {
+  D = await (await fetch('/data')).json();
+  render();
+}
+
+function visible() {
+  return D.cards.filter(c => {
+    const r = D.review[c.id];
+    if (type && c.type !== type) return false;
+    if (filter === 'todo') return !r || touched.has(c.id);
+    if (filter === 'none') return r && r.pick === 'none';
+    return true;
+  });
+}
+
+function render() {
+  rows = visible();
+  focus = Math.min(focus, Math.max(0, rows.length - 1));
+  const done = Object.keys(D.review).length;
+  const nones = Object.values(D.review).filter(r => r.pick === 'none').length;
+  document.getElementById('progress').textContent = `${done} / ${D.cards.length} reviewed · ${nones} none good`;
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+  rows.forEach((c, i) => {
+    const r = D.review[c.id];
+    const el = document.createElement('div');
+    el.className = 'row' + (i === focus ? ' focus' : '') + (r ? ' done-' + (r.pick === 'none' ? 'none' : r.pick === 'manual' ? 'manual' : 'voice') : '');
+    el.innerHTML = `<div><div class="text">${c.type === 'word' ? c.parts.join('·') : c.text}</div><div class="meta">${c.type} · “${c.say}”</div></div><div class="opts"></div>`;
+    const opts = el.querySelector('.opts');
+    c.voices.forEach((v, n) => {
+      const s = c.scores[v];
+      const wrap = document.createElement('div');
+      wrap.className = 'voice';
+      const b = button(`▶ <span class="k">${n + 1}</span>${v}`, (r && r.pick === v ? 'chosen' : '') + (lastPlayed[c.id] === v ? ' heard' : ''));
+      if (s && (s.error > 0.34 || !s.heard)) b.insertAdjacentHTML('beforeend', '<span class="dot" title="flagged: ' + (s.phonemes || 'nothing heard') + '"></span>');
+      b.onclick = () => { focus = i; listen(c, v); };
+      const use = document.createElement('button');
+      use.className = 'use' + (r && r.pick === v ? ' chosen' : '');
+      use.textContent = r && r.pick === v ? '✓ chosen' : 'use this';
+      use.onclick = () => { focus = i; choose(c, v); };
+      wrap.append(b, use);
+      opts.append(wrap);
+    });
+    const none = button('<span class="k">0</span>none good', 'none' + (r && r.pick === 'none' ? ' chosen' : ''));
+    none.onclick = () => { focus = i; choose(c, 'none'); };
+    opts.append(none);
+    const rec = button(recorder && recorder.id === c.id ? '■ stop' : '<span class="k">R</span>record own', 'manual' + (r && r.pick === 'manual' ? ' chosen' : '') + (recorder && recorder.id === c.id ? ' rec' : ''));
+    rec.onclick = () => { focus = i; toggleRecord(c); };
+    opts.append(rec);
+    if (c.manual) {
+      const p = button('<span class="k">M</span>play own', '');
+      p.onclick = () => play(`/manual/${c.id}.wav?${Date.now()}`);
+      opts.append(p);
+    }
+    el.onclick = e => { if (e.target === el) { focus = i; highlight(); } };
+    list.append(el);
+  });
+  highlight();
+}
+
+function button(html, cls) {
+  const b = document.createElement('button');
+  b.className = 'opt ' + cls;
+  b.innerHTML = html;
+  return b;
+}
+
+function highlight() {
+  [...document.querySelectorAll('.row')].forEach((el, i) => el.classList.toggle('focus', i === focus));
+  const el = document.querySelectorAll('.row')[focus];
+  if (el) el.scrollIntoView({ block: 'nearest' });
+}
+
+function play(src) {
+  audio.pause();
+  audio = new Audio(src);
+  audio.play().catch(() => {}); // a newer click interrupted this one
+}
+
+async function save(id, pick) {
+  touched.add(id);
+  if (pick === null) delete D.review[id]; else D.review[id] = { pick };
+  await fetch('/review', { method: 'POST', body: JSON.stringify({ id, pick }) });
+}
+
+function listen(c, v) {
+  lastPlayed[c.id] = v;
+  play(`/raw/${v}/${c.id}.wav`);
+  render();
+}
+
+async function choose(c, pick) {
+  await save(c.id, pick);
+  render();
+}
+
+// Record in the browser, convert to 16-bit WAV, upload.
+async function toggleRecord(c) {
+  if (recorder) {
+    const r = recorder;
+    recorder = null;
+    r.media.stop();
+    return;
+  }
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: true } });
+  const media = new MediaRecorder(stream);
+  const chunks = [];
+  media.ondataavailable = e => chunks.push(e.data);
+  media.onstop = async () => {
+    stream.getTracks().forEach(t => t.stop());
+    const buf = await new Blob(chunks).arrayBuffer();
+    const decoded = await new AudioContext().decodeAudioData(buf);
+    await fetch(`/manual/${c.id}`, { method: 'POST', body: toWav(decoded) });
+    c.manual = true;
+    touched.add(c.id);
+    D.review[c.id] = { pick: 'manual' };
+    play(`/manual/${c.id}.wav?${Date.now()}`);
+    render();
+  };
+  media.start();
+  recorder = { id: c.id, media };
+  render();
+}
+
+function toWav(b) {
+  const ch = b.getChannelData(0), n = ch.length, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+  const str = (o, s) => [...s].forEach((x, i) => v.setUint8(o + i, x.charCodeAt(0)));
+  str(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); str(8, 'WAVE'); str(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, b.sampleRate, true); v.setUint32(28, b.sampleRate * 2, true);
+  v.setUint16(32, 2, true); v.setUint16(34, 16, true); str(36, 'data'); v.setUint32(40, n * 2, true);
+  for (let i = 0; i < n; i++) v.setInt16(44 + i * 2, Math.max(-1, Math.min(1, ch[i])) * 0x7fff, true);
+  return buf;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT') return;
+  const c = rows[focus];
+  if (!c) return;
+  const k = e.key.toLowerCase();
+  if (k >= '1' && k <= '9' && c.voices[+k - 1]) listen(c, c.voices[+k - 1]);
+  else if (k === 'enter' && lastPlayed[c.id]) choose(c, lastPlayed[c.id]);
+  else if (k === '0') choose(c, 'none');
+  else if (k === 'r') toggleRecord(c);
+  else if (k === 'm' && c.manual) play(`/manual/${c.id}.wav?${Date.now()}`);
+  else if (k === 'arrowdown' || k === 'j') { focus = Math.min(rows.length - 1, focus + 1); highlight(); }
+  else if (k === 'arrowup' || k === 'k') { focus = Math.max(0, focus - 1); highlight(); }
+  else if (k === ' ') { e.preventDefault(); audio.currentTime = 0; audio.play(); }
+  else if (k === 'backspace') { save(c.id, null).then(render); }
+  else return;
+  if (k !== ' ') e.preventDefault();
+});
+
+document.querySelectorAll('.filters button').forEach(b => b.onclick = () => {
+  filter = b.dataset.f;
+  document.querySelectorAll('.filters button').forEach(x => x.classList.toggle('on', x === b));
+  focus = 0;
+  render();
+});
+document.getElementById('type').onchange = e => { type = e.target.value; focus = 0; render(); };
+
+load();
+</script>
+</body>
+</html>

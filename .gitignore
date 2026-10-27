@@ -4,3 +4,5 @@ dist
 *.tsbuildinfo
 .vercel
 .env*
+tools/audio/work/
+__pycache__/

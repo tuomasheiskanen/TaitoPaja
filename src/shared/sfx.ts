@@ -1,7 +1,7 @@
 // Synthesized sound effects, so no audio files are needed.
 let ctx: AudioContext | null = null;
 
-function audio() {
+export function audio() {
   if (!ctx) {
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     ctx = new AC();

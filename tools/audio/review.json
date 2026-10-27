@@ -1,0 +1,1409 @@
+{
+ "closed-do_n": {
+  "previous": "marin-punct"
+ },
+ "closed-do_t": {
+  "pick": "marin-carrier"
+ },
+ "closed-ha_k": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "closed-ha_l": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "closed-ha_n": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "closed-ha_r": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-ha_s": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-ha_t": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hak": {
+  "pick": "marin-carrier"
+ },
+ "closed-hal": {
+  "pick": "marin-carrier"
+ },
+ "closed-han": {
+  "pick": "marin-carrier"
+ },
+ "closed-har": {
+  "pick": "marin-carrier"
+ },
+ "closed-has": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-hat": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "closed-hek": {
+  "pick": "marin-carrier"
+ },
+ "closed-hel": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hen": {
+  "pick": "marin-carrier"
+ },
+ "closed-her": {
+  "pick": "marin-carrier"
+ },
+ "closed-hes": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "closed-het": {
+  "pick": "marin-carrier"
+ },
+ "closed-hik": {
+  "pick": "marin-carrier"
+ },
+ "closed-hil": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-hin": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "closed-hir": {
+  "pick": "marin-carrier"
+ },
+ "closed-his": {
+  "pick": "marin-carrier"
+ },
+ "closed-hit": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-ho_k": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-ho_l": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "closed-ho_n": {
+  "pick": "marin-carrier"
+ },
+ "closed-ho_r": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-ho_s": {
+  "pick": "marin-carrier"
+ },
+ "closed-ho_t": {
+  "pick": "marin-carrier"
+ },
+ "closed-hok": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-hol": {
+  "pick": "marin-carrier"
+ },
+ "closed-hon": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hor": {
+  "previous": "marin-punct",
+  "pick": "none"
+ },
+ "closed-hos": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hot": {
+  "pick": "marin-carrier"
+ },
+ "closed-huk": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-hul": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-hun": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hur": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hus": {
+  "pick": "marin-carrier"
+ },
+ "closed-hut": {
+  "pick": "marin-carrier"
+ },
+ "closed-hyk": {
+  "previous": "none",
+  "pick": "none"
+ },
+ "closed-hyl": {
+  "pick": "marin-carrier"
+ },
+ "closed-hyn": {
+  "pick": "marin-carrier"
+ },
+ "closed-hyr": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "closed-hys": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "closed-hyt": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "closed-ja_k": {
+  "pick": "marin-carrier"
+ },
+ "closed-ja_l": {
+  "pick": "marin-carrier"
+ },
+ "closed-ja_n": {
+  "pick": "marin-carrier"
+ },
+ "closed-ja_r": {
+  "pick": "marin-carrier"
+ },
+ "closed-ja_s": {
+  "pick": "marin-carrier"
+ },
+ "closed-ja_t": {
+  "pick": "none"
+ },
+ "closed-jak": {
+  "pick": "marin-carrier"
+ },
+ "closed-jan": {
+  "pick": "marin-carrier"
+ },
+ "closed-jar": {
+  "pick": "marin-carrier"
+ },
+ "closed-jas": {
+  "pick": "marin-carrier"
+ },
+ "closed-jat": {
+  "pick": "marin-carrier"
+ },
+ "closed-jek": {
+  "pick": "marin-carrier"
+ },
+ "closed-jel": {
+  "pick": "marin-carrier"
+ },
+ "closed-jen": {
+  "pick": "marin-carrier"
+ },
+ "closed-jer": {
+  "pick": "marin-carrier"
+ },
+ "closed-jes": {
+  "pick": "marin-carrier"
+ },
+ "closed-jet": {
+  "pick": "none"
+ },
+ "closed-jik": {
+  "pick": "none"
+ },
+ "closed-jil": {
+  "pick": "none"
+ },
+ "closed-jin": {
+  "pick": "none"
+ },
+ "closed-jir": {
+  "previous": "none",
+  "pick": "none"
+ },
+ "closed-jis": {
+  "pick": "marin-carrier"
+ },
+ "closed-jit": {
+  "pick": "none"
+ },
+ "closed-jo_k": {
+  "pick": "none"
+ },
+ "closed-jo_l": {
+  "pick": "none"
+ },
+ "closed-jo_n": {
+  "pick": "marin-carrier"
+ },
+ "closed-jo_r": {
+  "pick": "none"
+ },
+ "closed-jo_s": {
+  "pick": "marin-carrier"
+ },
+ "closed-jo_t": {
+  "pick": "marin-carrier"
+ },
+ "closed-jok": {
+  "pick": "marin-carrier"
+ },
+ "closed-jol": {
+  "pick": "marin-carrier"
+ },
+ "closed-jon": {
+  "pick": "marin-carrier"
+ },
+ "closed-jor": {
+  "pick": "marin-carrier"
+ },
+ "closed-jos": {
+  "pick": "marin-carrier"
+ },
+ "closed-jot": {
+  "pick": "marin-carrier"
+ },
+ "closed-juk": {
+  "pick": "marin-carrier"
+ },
+ "closed-jul": {
+  "pick": "marin-carrier"
+ },
+ "closed-jun": {
+  "pick": "marin-carrier"
+ },
+ "closed-jur": {
+  "pick": "none"
+ },
+ "closed-jus": {
+  "pick": "marin-carrier"
+ },
+ "closed-jut": {
+  "pick": "marin-carrier"
+ },
+ "closed-jyk": {
+  "pick": "marin-carrier"
+ },
+ "closed-jyl": {
+  "pick": "marin-carrier"
+ },
+ "closed-jyn": {
+  "pick": "marin-carrier"
+ },
+ "closed-jyr": {
+  "pick": "marin-carrier"
+ },
+ "closed-jys": {
+  "pick": "marin-carrier"
+ },
+ "closed-jyt": {
+  "pick": "none"
+ },
+ "closed-ka_k": {
+  "pick": "marin-carrier"
+ },
+ "closed-ka_l": {
+  "pick": "marin-carrier"
+ },
+ "closed-ka_n": {
+  "pick": "none"
+ },
+ "closed-ka_r": {
+  "pick": "marin-carrier"
+ },
+ "closed-ka_s": {
+  "pick": "marin-carrier"
+ },
+ "closed-ka_t": {
+  "pick": "marin-carrier"
+ },
+ "closed-kak": {
+  "pick": "marin-carrier"
+ },
+ "closed-kal": {
+  "pick": "marin-carrier"
+ },
+ "closed-kan": {
+  "pick": "marin-carrier"
+ },
+ "closed-kar": {
+  "pick": "marin-carrier"
+ },
+ "closed-kas": {
+  "pick": "marin-carrier"
+ },
+ "closed-kat": {
+  "previous": "manual",
+  "pick": "marin-carrier"
+ },
+ "closed-kek": {
+  "pick": "marin-carrier"
+ },
+ "closed-kel": {
+  "pick": "none"
+ },
+ "closed-ken": {
+  "pick": "marin-carrier"
+ },
+ "closed-ker": {
+  "pick": "marin-carrier"
+ },
+ "closed-kes": {
+  "pick": "marin-carrier"
+ },
+ "closed-ket": {
+  "pick": "none"
+ },
+ "closed-kik": {
+  "pick": "marin-carrier"
+ },
+ "closed-kil": {
+  "pick": "marin-carrier"
+ },
+ "closed-kin": {
+  "pick": "marin-carrier"
+ },
+ "closed-kir": {
+  "pick": "none"
+ },
+ "closed-kis": {
+  "pick": "none"
+ },
+ "closed-kit": {
+  "pick": "marin-carrier"
+ },
+ "closed-ko_k": {
+  "pick": "marin-carrier"
+ },
+ "closed-ko_l": {
+  "pick": "marin-carrier"
+ },
+ "closed-ko_n": {
+  "pick": "marin-carrier"
+ },
+ "closed-ko_r": {
+  "pick": "marin-carrier"
+ },
+ "closed-ko_s": {
+  "pick": "marin-carrier"
+ },
+ "closed-ko_t": {
+  "pick": "none"
+ },
+ "closed-kok": {
+  "pick": "none"
+ },
+ "closed-kol": {
+  "pick": "marin-carrier"
+ },
+ "closed-kon": {
+  "pick": "marin-carrier"
+ },
+ "closed-kor": {
+  "pick": "marin-carrier"
+ },
+ "closed-kos": {
+  "pick": "marin-carrier"
+ },
+ "closed-kot": {
+  "pick": "marin-carrier"
+ },
+ "closed-kuk": {
+  "pick": "marin-carrier"
+ },
+ "closed-kul": {
+  "pick": "marin-carrier"
+ },
+ "closed-kun": {
+  "pick": "marin-carrier"
+ },
+ "closed-kur": {
+  "pick": "marin-carrier"
+ },
+ "closed-kus": {
+  "pick": "none"
+ },
+ "closed-kut": {
+  "pick": "marin-carrier"
+ },
+ "closed-kyk": {
+  "pick": "none"
+ },
+ "closed-kyl": {
+  "pick": "marin-carrier"
+ },
+ "closed-kyn": {
+  "pick": "marin-carrier"
+ },
+ "closed-kyr": {
+  "pick": "marin-carrier"
+ },
+ "closed-kys": {
+  "pick": "marin-carrier"
+ },
+ "closed-kyt": {
+  "pick": "none"
+ },
+ "closed-la_k": {
+  "pick": "marin-carrier"
+ },
+ "closed-la_l": {
+  "pick": "none"
+ },
+ "closed-la_n": {
+  "pick": "marin-carrier"
+ },
+ "closed-la_r": {
+  "pick": "none"
+ },
+ "closed-la_s": {
+  "pick": "marin-carrier"
+ },
+ "closed-la_t": {
+  "pick": "none"
+ },
+ "closed-lak": {
+  "pick": "none"
+ },
+ "closed-lal": {
+  "pick": "none"
+ },
+ "closed-lan": {
+  "pick": "marin-carrier"
+ },
+ "closed-lar": {
+  "pick": "marin-carrier"
+ },
+ "closed-las": {
+  "pick": "marin-carrier"
+ },
+ "closed-lat": {
+  "pick": "none"
+ },
+ "closed-lek": {
+  "pick": "marin-carrier"
+ },
+ "closed-lel": {
+  "pick": "marin-carrier"
+ },
+ "closed-len": {
+  "pick": "marin-carrier"
+ },
+ "closed-ler": {
+  "pick": "none"
+ },
+ "closed-les": {
+  "pick": "marin-carrier"
+ },
+ "closed-let": {
+  "pick": "marin-carrier"
+ },
+ "closed-lik": {
+  "pick": "marin-carrier"
+ },
+ "closed-lil": {
+  "pick": "marin-carrier"
+ },
+ "closed-lin": {
+  "pick": "none"
+ },
+ "closed-lir": {
+  "pick": "none"
+ },
+ "closed-lis": {
+  "pick": "none"
+ },
+ "closed-lit": {
+  "pick": "marin-carrier"
+ },
+ "closed-lo_k": {
+  "pick": "marin-carrier"
+ },
+ "closed-lo_l": {
+  "pick": "marin-carrier"
+ },
+ "closed-lo_n": {
+  "pick": "none"
+ },
+ "closed-lok": {
+  "pick": "marin-carrier"
+ },
+ "closed-lol": {
+  "pick": "marin-carrier"
+ },
+ "closed-lon": {
+  "pick": "marin-carrier"
+ },
+ "closed-lor": {
+  "pick": "marin-carrier"
+ },
+ "closed-los": {
+  "pick": "marin-carrier"
+ },
+ "closed-lot": {
+  "pick": "none"
+ },
+ "closed-luk": {
+  "pick": "marin-carrier"
+ },
+ "closed-lul": {
+  "pick": "marin-carrier"
+ },
+ "closed-lun": {
+  "pick": "marin-carrier"
+ },
+ "closed-lur": {
+  "pick": "marin-carrier"
+ },
+ "closed-lus": {
+  "pick": "marin-carrier"
+ },
+ "closed-lut": {
+  "pick": "marin-carrier"
+ },
+ "closed-lyk": {
+  "pick": "marin-carrier"
+ },
+ "closed-lyl": {
+  "pick": "marin-carrier"
+ },
+ "closed-lyn": {
+  "pick": "none"
+ },
+ "closed-lyr": {
+  "pick": "none"
+ },
+ "closed-lys": {
+  "pick": "marin-carrier"
+ },
+ "closed-lyt": {
+  "pick": "none"
+ },
+ "closed-ma_l": {
+  "previous": "marin-punct"
+ },
+ "closed-mo_k": {
+  "previous": "manual"
+ },
+ "closed-myt": {
+  "previous": "marin-punct"
+ },
+ "closed-suk": {
+  "pick": "marin-carrier"
+ },
+ "closed-sun": {
+  "previous": "marin"
+ },
+ "closed-syl": {
+  "previous": "none"
+ },
+ "letter-a": {
+  "previous": "coral",
+  "pick": "marin-carrier"
+ },
+ "letter-a_": {
+  "previous": "marin",
+  "pick": "marin-carrier"
+ },
+ "letter-aa_": {
+  "pick": "marin-carrier"
+ },
+ "letter-b": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "letter-c": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "letter-d": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "letter-e": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "letter-f": {
+  "pick": "marin-carrier"
+ },
+ "letter-g": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "letter-h": {
+  "pick": "marin-carrier"
+ },
+ "letter-i": {
+  "pick": "marin-carrier"
+ },
+ "letter-j": {
+  "pick": "marin-carrier"
+ },
+ "letter-k": {
+  "previous": "coral",
+  "pick": "marin-carrier"
+ },
+ "letter-l": {
+  "pick": "marin-carrier"
+ },
+ "letter-m": {
+  "pick": "marin-carrier"
+ },
+ "letter-n": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "letter-o": {
+  "pick": "marin-carrier"
+ },
+ "letter-o_": {
+  "pick": "marin-carrier"
+ },
+ "letter-p": {
+  "pick": "marin-carrier"
+ },
+ "letter-q": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "letter-r": {
+  "previous": "marin",
+  "pick": "marin-carrier"
+ },
+ "letter-s": {
+  "previous": "coral",
+  "pick": "marin-carrier2"
+ },
+ "letter-t": {
+  "pick": "marin-carrier"
+ },
+ "letter-u": {
+  "pick": "marin-carrier"
+ },
+ "letter-v": {
+  "pick": "marin-carrier"
+ },
+ "letter-w": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "letter-x": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "letter-y": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "letter-z": {
+  "pick": "marin-carrier"
+ },
+ "long-da_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-daa": {
+  "pick": "marin-carrier"
+ },
+ "long-dee": {
+  "pick": "marin-carrier"
+ },
+ "long-dii": {
+  "pick": "marin-carrier"
+ },
+ "long-do_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-doo": {
+  "pick": "marin-carrier"
+ },
+ "long-duu": {
+  "pick": "marin-carrier"
+ },
+ "long-dyy": {
+  "pick": "marin-carrier"
+ },
+ "long-ha_a_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-haa": {
+  "pick": "marin-carrier"
+ },
+ "long-hee": {
+  "pick": "marin-carrier"
+ },
+ "long-hii": {
+  "pick": "marin-carrier"
+ },
+ "long-ho_o_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "long-hoo": {
+  "pick": "marin-carrier"
+ },
+ "long-huu": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-hyy": {
+  "pick": "marin-carrier"
+ },
+ "long-ja_a_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "long-jaa": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "long-jee": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "long-jii": {
+  "pick": "marin-carrier"
+ },
+ "long-jo_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-joo": {
+  "pick": "marin-carrier"
+ },
+ "long-juu": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-jyy": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-ka_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-kaa": {
+  "previous": "nova",
+  "pick": "marin-carrier2"
+ },
+ "long-kee": {
+  "pick": "marin-carrier"
+ },
+ "long-kii": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-ko_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-koo": {
+  "previous": "none",
+  "pick": "none"
+ },
+ "long-kuu": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "long-kyy": {
+  "pick": "marin-carrier"
+ },
+ "long-la_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-laa": {
+  "pick": "marin-carrier"
+ },
+ "long-lee": {
+  "pick": "marin-carrier"
+ },
+ "long-lii": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-lo_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-loo": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-luu": {
+  "pick": "marin-carrier"
+ },
+ "long-lyy": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-ma_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-maa": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-mee": {
+  "pick": "marin-carrier"
+ },
+ "long-mii": {
+  "pick": "marin-carrier"
+ },
+ "long-mo_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-moo": {
+  "pick": "marin-carrier"
+ },
+ "long-muu": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-myy": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "long-na_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-naa": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-nee": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "long-nii": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "long-no_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-noo": {
+  "pick": "marin-carrier"
+ },
+ "long-nuu": {
+  "pick": "marin-carrier"
+ },
+ "long-nyy": {
+  "pick": "marin-carrier"
+ },
+ "long-pa_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-paa": {
+  "pick": "marin-carrier"
+ },
+ "long-pee": {
+  "pick": "marin-carrier"
+ },
+ "long-pii": {
+  "pick": "marin-carrier"
+ },
+ "long-po_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-poo": {
+  "pick": "marin-carrier"
+ },
+ "long-puu": {
+  "pick": "marin-carrier"
+ },
+ "long-pyy": {
+  "pick": "marin-carrier"
+ },
+ "long-ra_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-raa": {
+  "pick": "marin-carrier"
+ },
+ "long-ree": {
+  "pick": "marin-carrier"
+ },
+ "long-rii": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "long-ro_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-roo": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "long-ruu": {
+  "pick": "marin-carrier"
+ },
+ "long-ryy": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "long-sa_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-saa": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "long-see": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "long-sii": {
+  "previous": "manual",
+  "pick": "marin-carrier3"
+ },
+ "long-so_o_": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-soo": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "long-suu": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-syy": {
+  "pick": "marin-carrier"
+ },
+ "long-ta_a_": {
+  "pick": "marin-carrier"
+ },
+ "long-taa": {
+  "pick": "marin-carrier"
+ },
+ "long-tee": {
+  "pick": "marin-carrier"
+ },
+ "long-tii": {
+  "pick": "marin-carrier"
+ },
+ "long-to_o_": {
+  "pick": "marin-carrier"
+ },
+ "long-too": {
+  "previous": "none",
+  "pick": "none"
+ },
+ "long-tuu": {
+  "previous": "marin",
+  "pick": "marin-carrier3"
+ },
+ "long-tyy": {
+  "pick": "marin-carrier"
+ },
+ "long-va_a_": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "long-vaa": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "long-vee": {
+  "pick": "marin-carrier"
+ },
+ "long-vii": {
+  "pick": "marin-carrier"
+ },
+ "long-vo_o_": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "long-voo": {
+  "pick": "marin-carrier"
+ },
+ "long-vuu": {
+  "pick": "marin-carrier"
+ },
+ "long-vyy": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-da": {
+  "pick": "marin-carrier"
+ },
+ "open-da_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "open-de": {
+  "pick": "marin-carrier"
+ },
+ "open-di": {
+  "pick": "marin-carrier"
+ },
+ "open-do": {
+  "pick": "marin-carrier"
+ },
+ "open-do_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "open-du": {
+  "pick": "marin-carrier"
+ },
+ "open-dy": {
+  "pick": "marin-carrier"
+ },
+ "open-ha": {
+  "pick": "marin-carrier"
+ },
+ "open-ha_": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "open-he": {
+  "pick": "marin-carrier"
+ },
+ "open-hi": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-ho": {
+  "pick": "marin-carrier"
+ },
+ "open-ho_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "open-hu": {
+  "pick": "marin-carrier"
+ },
+ "open-hy": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "open-ja": {
+  "pick": "marin-carrier"
+ },
+ "open-ja_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "open-je": {
+  "pick": "marin-carrier"
+ },
+ "open-ji": {
+  "pick": "marin-carrier"
+ },
+ "open-jo": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "open-jo_": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "open-ju": {
+  "pick": "marin-carrier"
+ },
+ "open-jy": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-ka": {
+  "previous": "manual",
+  "pick": "marin-carrier"
+ },
+ "open-ka_": {
+  "pick": "marin-carrier"
+ },
+ "open-ke": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-ki": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "open-ko": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "open-ko_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "open-ku": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-ky": {
+  "pick": "marin-carrier"
+ },
+ "open-la": {
+  "pick": "marin-carrier"
+ },
+ "open-la_": {
+  "previous": "marin",
+  "pick": "marin-carrier3"
+ },
+ "open-le": {
+  "pick": "marin-carrier"
+ },
+ "open-li": {
+  "pick": "marin-carrier"
+ },
+ "open-lo": {
+  "pick": "marin-carrier"
+ },
+ "open-lo_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "open-lu": {
+  "pick": "marin-carrier"
+ },
+ "open-ly": {
+  "pick": "marin-carrier"
+ },
+ "open-ma": {
+  "pick": "marin-carrier"
+ },
+ "open-ma_": {
+  "pick": "marin-carrier"
+ },
+ "open-me": {
+  "pick": "marin-carrier"
+ },
+ "open-mi": {
+  "pick": "marin-carrier"
+ },
+ "open-mo": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "open-mo_": {
+  "previous": "coral",
+  "pick": "marin-carrier2"
+ },
+ "open-mu": {
+  "pick": "marin-carrier"
+ },
+ "open-my": {
+  "pick": "marin-carrier"
+ },
+ "open-na": {
+  "pick": "marin-carrier"
+ },
+ "open-na_": {
+  "pick": "marin-carrier"
+ },
+ "open-ne": {
+  "pick": "marin-carrier"
+ },
+ "open-ni": {
+  "pick": "marin-carrier"
+ },
+ "open-no": {
+  "pick": "marin-carrier"
+ },
+ "open-no_": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-nu": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-ny": {
+  "pick": "marin-carrier"
+ },
+ "open-pa": {
+  "pick": "marin-carrier"
+ },
+ "open-pa_": {
+  "pick": "marin-carrier"
+ },
+ "open-pe": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier"
+ },
+ "open-pi": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-po": {
+  "pick": "marin-carrier"
+ },
+ "open-po_": {
+  "pick": "marin-carrier"
+ },
+ "open-pu": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "open-py": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-ra": {
+  "pick": "marin-carrier"
+ },
+ "open-ra_": {
+  "pick": "marin-carrier"
+ },
+ "open-re": {
+  "pick": "marin-carrier"
+ },
+ "open-ri": {
+  "previous": "none",
+  "pick": "none"
+ },
+ "open-ro": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-ro_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "open-ru": {
+  "previous": "none",
+  "pick": "none"
+ },
+ "open-ry": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "open-sa": {
+  "pick": "marin-carrier"
+ },
+ "open-sa_": {
+  "pick": "marin-carrier"
+ },
+ "open-se": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "open-si": {
+  "previous": "marin",
+  "pick": "marin-carrier2"
+ },
+ "open-so": {
+  "previous": "none",
+  "pick": "marin-carrier"
+ },
+ "open-so_": {
+  "pick": "marin-carrier"
+ },
+ "open-su": {
+  "previous": "none",
+  "pick": "marin-carrier3"
+ },
+ "open-sy": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-ta": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-ta_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "open-te": {
+  "pick": "marin-carrier"
+ },
+ "open-ti": {
+  "pick": "marin-carrier"
+ },
+ "open-to": {
+  "pick": "marin-carrier"
+ },
+ "open-to_": {
+  "pick": "marin-carrier"
+ },
+ "open-tu": {
+  "pick": "marin-carrier"
+ },
+ "open-ty": {
+  "previous": "manual",
+  "pick": "marin-carrier"
+ },
+ "open-va": {
+  "pick": "marin-carrier"
+ },
+ "open-va_": {
+  "pick": "marin-carrier"
+ },
+ "open-ve": {
+  "pick": "marin-carrier"
+ },
+ "open-vi": {
+  "pick": "marin-carrier"
+ },
+ "open-vo": {
+  "previous": "none",
+  "pick": "marin-carrier2"
+ },
+ "open-vo_": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier3"
+ },
+ "open-vu": {
+  "previous": "marin-punct",
+  "pick": "marin-carrier2"
+ },
+ "open-vy": {
+  "pick": "marin-carrier"
+ },
+ "word-kala": {
+  "previous": "nova"
+ },
+ "word-kivi": {
+  "pick": "marin-carrier"
+ },
+ "word-kyla_": {
+  "previous": "coral"
+ },
+ "word-mama": {
+  "pick": "marin-carrier"
+ },
+ "word-mato": {
+  "previous": "marin-punct"
+ },
+ "word-muna": {
+  "previous": "marin-punct"
+ },
+ "word-nena_": {
+  "previous": "marin"
+ },
+ "word-pesa_": {
+  "pick": "marin-carrier"
+ },
+ "word-pipo": {
+  "pick": "marin-carrier"
+ },
+ "word-sika": {
+  "pick": "marin-carrier"
+ },
+ "word-ta_ti": {
+  "pick": "marin-carrier"
+ }
+}
