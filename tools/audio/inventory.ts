@@ -5,9 +5,9 @@ import { CARD_TYPES, CONSONANTS, RARE, VOWELS, buildPool, soundOf } from '../../
 
 const ALL = [...VOWELS, ...CONSONANTS, ...RARE];
 
-/** ASCII-safe id for file names: ä → a_, ö → o_, å → aa_ (underscore never appears otherwise). */
+/** ASCII-safe id for file names: ä → a_, ö → o_, å → aa_ (underscore never appears otherwise), space → -. */
 export const clipId = (type: string, text: string) =>
-  `${type}-${text.toLowerCase().replace(/ä/g, 'a_').replace(/ö/g, 'o_').replace(/å/g, 'aa_')}`;
+  `${type}-${text.toLowerCase().replace(/ä/g, 'a_').replace(/ö/g, 'o_').replace(/å/g, 'aa_').replace(/ /g, '-')}`;
 
 const cards = CARD_TYPES.flatMap(t =>
   buildPool(t.id, ALL).map(c => ({

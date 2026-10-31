@@ -194,9 +194,11 @@ h1, p { margin: 0; }
 }
 .spark-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 28px; }
 .card-text {
-  display: flex; align-items: baseline; font-family: var(--letter-font); font-weight: 700;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0.15em 0.4em;
+  padding: 0 8px; font-family: var(--letter-font); font-weight: 700;
   line-height: 1; letter-spacing: 0.02em; pointer-events: none;
 }
+.card-word { white-space: nowrap; }
 .card-text .dot { color: #6f7bb0; padding: 0 0.08em; }
 .swipe-hint { text-align: center; font-size: 13px; color: var(--muted); margin-top: -4px; }
 
@@ -213,7 +215,7 @@ h1, p { margin: 0; }
   flex: 1; min-height: 72px; max-height: 120px; border-radius: 20px; cursor: pointer;
   font-family: var(--letter-font); font-weight: 700; background: var(--surface);
   border: 2px solid var(--line); box-shadow: 0 4px 0 var(--surface-shadow);
-  transition: background 280ms, opacity 280ms;
+  transition: background 280ms, opacity 280ms; padding: 4px 12px; line-height: 1.15;
 }
 .option.wrong { background: var(--wrong); }
 .option.right { background: var(--right); border-color: var(--right-line); }

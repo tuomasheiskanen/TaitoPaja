@@ -1,7 +1,7 @@
 # TaitoPaja
 
 A small offline learning app (PWA) for kids. The first module teaches Finnish
-letters, syllables and two-syllable words. Everything runs and is stored on the phone.
+letters, syllables (incl. diphthongs), words and short sentences. Everything runs and is stored on the phone.
 
 Design source: Claude Design project "TaitoPaja", file `TaitoPaja.dc.html`
 (https://claude.ai/design/p/b4f9a9d7-07f9-40f5-8c7d-8e89f1dd2f09?file=TaitoPaja.dc.html).

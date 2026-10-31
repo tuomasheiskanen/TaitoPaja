@@ -2,7 +2,7 @@ import { useEffect, useRef, type Dispatch, type PointerEvent, type SetStateActio
 import { IconClose, IconSpeaker } from '../../shared/icons';
 import { boing, cheer } from '../../shared/sfx';
 import { pop, startDust, wobble } from '../../shared/fx';
-import { typeInfo, type Card } from './data';
+import { isWord, typeInfo, type Card } from './data';
 import { speakCard } from './speak';
 import type { Mode } from './settings';
 
@@ -47,7 +47,11 @@ export default function Quiz({ mode, round, setRound, record, next, stop, celebr
   );
 }
 
-const label = (c: Card) => (c.type === 'word' && SYLLABLE_DOTS ? c.parts.join('·') : c.text);
+/** A card's words, each split into syllables; everything but a sentence is one word. */
+const wordsOf = (c: Card): string[][] =>
+  c.type === 'sentence' ? c.parts.map(w => w.split('-')) : isWord(c.type) ? [c.parts] : [[c.text]];
+
+const label = (c: Card) => wordsOf(c).map(w => w.join(SYLLABLE_DOTS ? '·' : '')).join(' ');
 
 /* Adult shows the card; swipe up = read it, left = needs practice, down = skip. */
 function ParentCard({ item, record, next, celebrate }: Pick<Props, 'record' | 'next' | 'celebrate'> & { item: Card }) {
@@ -137,16 +141,19 @@ function ParentCard({ item, record, next, celebrate }: Pick<Props, 'record' | 'n
   };
 
   const info = typeInfo(item.type);
-  const parts = item.type === 'word' ? item.parts : [item.text];
   return (
     <>
       <div ref={cardRef} className="flash-card" onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp}>
         <div ref={sparkRef} className="spark-layer" />
         <div className="card-text" style={{ fontSize: `min(${info.size}, ${parseInt(info.size) / 3.9}vw)`, color: info.color }}>
-          {parts.map((p, i) => (
-            <span key={i}>
-              {SYLLABLE_DOTS && i > 0 && <span className="dot">·</span>}
-              {p}
+          {wordsOf(item).map((w, j) => (
+            <span key={j} className="card-word">
+              {w.map((p, i) => (
+                <span key={i}>
+                  {SYLLABLE_DOTS && i > 0 && <span className="dot">·</span>}
+                  {p}
+                </span>
+              ))}
             </span>
           ))}
         </div>

@@ -38,7 +38,8 @@ WORK = HERE / "work"
 MODEL = "gpt-4o-mini-tts"
 RARE = set("BCFGQWXZÅ")  # letters whose syllables are left to device speech (--core)
 CHAT_MODEL = "gpt-audio"
-CARRIER = {"letter": "Seuraava kirjain on:", "word": "Seuraava sana on:"}
+CARRIER = {"letter": "Seuraava kirjain on:", "word": "Seuraava sana on:", "mixword": "Seuraava sana on:",
+           "longword": "Seuraava sana on:", "sentence": "Seuraava lause on:"}
 CARRIER_DEFAULT = "Seuraava tavu on:"
 
 PILOT = [
@@ -60,7 +61,11 @@ STYLE = {
     "open": "The text is a single Finnish syllable, not a word. Do not spell it letter by letter. Keep the vowel short.",
     "long": "The text is a single Finnish syllable with a long vowel. Do not spell it. Make the double vowel clearly long.",
     "closed": "The text is a single Finnish syllable, not a word. Do not spell it. Keep the vowel short and pronounce the final consonant clearly.",
+    "diph": "The text is a single Finnish syllable with a diphthong, not a word. Do not spell it. Glide the two vowels together.",
     "word": "The text is a Finnish word. Say it naturally and clearly.",
+    "mixword": "The text is a Finnish word. Say it naturally and clearly; keep double consonants and long vowels clearly long.",
+    "longword": "The text is a Finnish word. Say it naturally and clearly.",
+    "sentence": "The text is a short Finnish sentence. Read it slowly and clearly, like reading aloud to a child.",
 }
 
 
@@ -124,7 +129,7 @@ def main():
         wanted = set(args.ids.split(","))
         cards = [c for c in cards if c["id"] in wanted]
     if args.core:
-        cards = [c for c in cards if c["type"] in ("letter", "word") or not RARE & set(c["text"])]
+        cards = [c for c in cards if c["type"] in ("letter", "word", "mixword", "longword", "sentence") or not RARE & set(c["text"])]
     if args.skip_reviewed and (HERE / "review.json").exists():
         decided = json.loads((HERE / "review.json").read_text())
         cards = [c for c in cards if c["id"] not in decided]
