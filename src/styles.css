@@ -152,6 +152,33 @@ h1, p { margin: 0; }
 .cta-label { font-size: 18px; font-weight: 600; }
 .cta-sub { font-size: 13px; font-weight: 500; color: #5a4a1a; }
 
+/* ---- Settings ---- */
+.path-head-actions { display: flex; align-items: center; gap: 8px; }
+.settings-btn { width: 36px; height: 36px; background: #1a2a5e; border: 1px solid var(--line); color: var(--ink-soft); }
+.settings {
+  overflow-y: auto; display: flex; flex-direction: column; gap: 20px;
+  padding: calc(var(--safe-top) + 8px) 20px calc(32px + var(--safe-bottom));
+}
+.settings .title { padding: 0 4px; }
+.settings-group { display: flex; flex-direction: column; gap: 10px; }
+.panel {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  box-shadow: 0 4px 0 var(--surface-shadow);
+}
+.settings-panel { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.settings-text { font-size: 14px; color: var(--muted); line-height: 1.5; text-wrap: pretty; }
+.settings-select {
+  height: 48px; padding: 0 12px; border-radius: 14px; border: 1px solid var(--line);
+  background: #1a2a5e; color: var(--ink); font: inherit; font-size: 16px;
+}
+.btn-secondary {
+  height: 52px; border: 1px solid rgba(255, 209, 102, 0.5); border-radius: 16px; background: transparent;
+  color: var(--gold); font-size: 16px; font-weight: 600; cursor: pointer; transition: background 200ms, color 200ms;
+}
+.btn-secondary.confirm { background: var(--gold); color: var(--navy); }
+.btn-secondary.danger { border-color: rgba(255, 143, 163, 0.5); color: #ff8fa3; }
+.btn-secondary.danger.confirm { background: #ff8fa3; color: var(--navy); }
+
 /* ---- Intro ---- */
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 .intro {

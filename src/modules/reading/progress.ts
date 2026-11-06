@@ -14,7 +14,7 @@ const RECENT = 10;
 /** Share of cards drawn from earlier levels. */
 const REVIEW_SHARE = 0.3;
 /** New islands that can be finished per day; the next one waits for tomorrow. */
-export const DAILY_NEW = 2;
+export const DAILY_NEW = 5;
 /** First-try corrects after which a card counts as known (for the last island). */
 const KNOWN_AT = 2;
 
@@ -161,3 +161,19 @@ export function nextCard(s: PathState, i: number, last: string | null, missRun: 
 
 /** Pools to draw wrong options from: the level's own cards plus the card's own type. */
 export const optionPools = (i: number, card: Card) => [...levelPools(i).map(p => p.pool), buildPool(card.type, focusAt(i))];
+
+/** Everything back to the first island. Only the parent/child mode is kept. */
+export const resetProgress = (s: PathState): PathState => ({ mode: s.mode, stars: 0, misses: {}, known: {}, levels: {}, sel: null });
+
+/** Day marker for levels skipped by choosing a starting point; they don't count toward the daily limit. */
+const SKIPPED = 'skipped';
+
+/**
+ * Start the path from level k: earlier levels count as done, k and later start fresh.
+ * Stars and per-card memory are kept.
+ */
+export function startFrom(s: PathState, k: number): PathState {
+  const levels: Record<number, LevelProgress> = {};
+  for (let i = 0; i < k && i < LAST; i++) levels[i] = { credits: goalOf(i), recent: [], streak: 0, done: SKIPPED };
+  return { ...s, levels, sel: k };
+}

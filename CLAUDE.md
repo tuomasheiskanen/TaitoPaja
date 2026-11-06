@@ -26,8 +26,11 @@ works offline. Icons are generated from `public/favicon.svg` with `npm run icons
     advancement rules (`answer`, `nextCard`, daily limit). Migrates `mode` and
     `misses` from the old `taitopaja.reading.v1`.
   - `speak.ts` – plays a card's clips (or falls back to device speech).
-  - `ReadingModule.tsx` – screen state (path / intro / quiz / level done) and round state.
-  - `Path.tsx`, `Intro.tsx`, `Quiz.tsx`, `LevelDone.tsx` – the screens.
+  - `ReadingModule.tsx` – screen state (path / intro / quiz / settings / level done) and round state.
+  - `Path.tsx`, `Intro.tsx`, `Quiz.tsx`, `LevelDone.tsx`, `Settings.tsx` – the screens.
+    Settings (gear on the path) lets the parent pick a starting level (`startFrom`:
+    earlier levels marked done as "skipped", not counted toward the daily limit)
+    or reset all progress (`resetProgress`); both need a second tap to confirm.
 - `src/styles.css` – all styles; colors are CSS variables on `:root`. The app is a
   phone-width column (max 480px) using `100dvh` and safe-area insets.
 - `docs/` – ideas not yet implemented.
@@ -44,7 +47,7 @@ in the TaitoPaja project (link in README). Differences from the design, all inte
   finish a level early ("Lentäen läpi!"); otherwise the goal must be reached with
   ≥ 70 % first-try corrects in the last 10 answers (the last goal dot waits for that,
   dots never go down); after two misses in a row an already known card comes up;
-  ~30 % of cards review an earlier level; at most 2 new islands per day (the next
+  ~30 % of cards review an earlier level; at most 5 new islands per day (the next
   one shows ☾ "huomenna"); stars only for first-try corrects.
 - Every level that adds letters also has single-letter cards (the design skipped
   them for K, P V and D).

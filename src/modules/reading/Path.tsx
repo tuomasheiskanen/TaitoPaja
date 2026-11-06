@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, type MouseEvent, type ReactNode } from 'react';
-import { IconStar } from '../../shared/icons';
+import { IconSettings, IconStar } from '../../shared/icons';
 import { halo, shake } from '../../shared/fx';
 import { typeInfo } from './data';
 import { LAST, LEVELS, goalOf } from './levels';
@@ -14,6 +14,7 @@ interface Props {
   setMode: (m: Mode) => void;
   start: (i: number) => void;
   celebrate: () => void;
+  openSettings: () => void;
 }
 
 const MODES: { id: Mode; label: string }[] = [
@@ -41,7 +42,7 @@ const curve = (a: [number, number][]) =>
 
 type IslandState = 'done' | 'cur' | 'open' | 'rest' | 'lock';
 
-export default function Path({ state, justDone, counterRef, select, setMode, start, celebrate }: Props) {
+export default function Path({ state, justDone, counterRef, select, setMode, start, celebrate, openSettings }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const haloRef = useRef<HTMLDivElement>(null);
   const r = reach(state), rest = resting(state), sel = selIdx(state);
@@ -88,9 +89,14 @@ export default function Path({ state, justDone, counterRef, select, setMode, sta
       <div className="path-head">
         <div className="path-title-row">
           <h1 className="path-title">TaitoPaja</h1>
-          <div ref={counterRef} className="star-count">
-            <IconStar />
-            {state.stars}
+          <div className="path-head-actions">
+            <div ref={counterRef} className="star-count">
+              <IconStar />
+              {state.stars}
+            </div>
+            <button className="round-btn settings-btn" aria-label="Asetukset" onClick={openSettings}>
+              <IconSettings size={20} />
+            </button>
           </div>
         </div>
         <div className="journey">

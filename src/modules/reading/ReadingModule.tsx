@@ -3,19 +3,20 @@ import { warmUpVoices } from '../../shared/speech';
 import { confetti, flyStar } from '../../shared/fx';
 import { buildOptions } from './data';
 import { LAST, LEVELS, goalOf } from './levels';
-import { answer, dots, knownCount, loadPath, nextCard, optionPools, resting, savePath, selIdx, type PathState } from './progress';
+import { answer, dots, knownCount, loadPath, nextCard, optionPools, resetProgress, resting, savePath, selIdx, startFrom, type PathState } from './progress';
 import { preloadCard, speakCard, stopAll } from './speak';
 import Path from './Path';
 import Intro from './Intro';
 import Quiz, { type Round } from './Quiz';
 import LevelDone from './LevelDone';
+import Settings from './Settings';
 
 /** In child mode, say the card out loud as soon as it appears. */
 const AUTO_PLAY = true;
 
 export default function ReadingModule() {
   const [state, setState] = useState(loadPath);
-  const [screen, setScreen] = useState<'path' | 'intro' | 'quiz'>('path');
+  const [screen, setScreen] = useState<'path' | 'intro' | 'quiz' | 'settings'>('path');
   const [round, setRound] = useState<Round | null>(null);
   const [done, setDone] = useState<{ level: number; fast: boolean } | null>(null);
   const [justDone, setJustDone] = useState<number | null>(null);
@@ -84,6 +85,23 @@ export default function ReadingModule() {
           setMode={mode => update({ mode })}
           start={start}
           celebrate={celebrate}
+          openSettings={() => setScreen('settings')}
+        />
+      )}
+      {screen === 'settings' && (
+        <Settings
+          state={state}
+          onBack={toPath}
+          onStartFrom={k => {
+            setState(s => startFrom(s, k));
+            setJustDone(null);
+            setScreen('path');
+          }}
+          onReset={() => {
+            setState(resetProgress);
+            setJustDone(null);
+            setScreen('path');
+          }}
         />
       )}
       {screen === 'intro' && <Intro level={i} onBack={toPath} onBegin={next} />}
