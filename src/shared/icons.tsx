@@ -41,3 +41,9 @@ export const IconSettings = ({ size = 22 }: P) => (
     <circle cx="12" cy="12" r="3" />
   </svg>
 );
+
+export const IconStar = ({ size = 16, fill = '#FFD166' }: P & { fill?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden>
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill={fill} />
+  </svg>
+);

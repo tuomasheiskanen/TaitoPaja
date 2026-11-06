@@ -5,7 +5,7 @@ export const RARE = ['B', 'C', 'F', 'G', 'Q', 'W', 'X', 'Z', 'Å'];
 /** Consonants that may end a closed syllable (KAT, KAS, ...). */
 const FINALS = ['N', 'S', 'T', 'L', 'R', 'K'];
 /** Two-syllable words of open syllables; the dash marks the syllable break. */
-const WORDS = ['KA-LA', 'TA-LO', 'LU-MI', 'KU-MI', 'SI-KA', 'NE-NÄ', 'MA-TO', 'VE-SI', 'KO-TI', 'MÄ-KI', 'SA-TA', 'MU-NA', 'KI-SA', 'TU-PA', 'SU-SI', 'KI-VI', 'PE-SÄ', 'LA-VA', 'RA-HA', 'JO-KI', 'PI-PO', 'MA-MA', 'PA-PA', 'TÄ-TI', 'MÖ-KI', 'KY-LÄ', 'HY-VÄ', 'PU-SU', 'HE-PO', 'TU-LI', 'MU-TA', 'PA-LA', 'KA-SA', 'SA-KO', 'LO-KA', 'NA-MI'];
+const WORDS = ['KA-LA', 'TA-LO', 'LU-MI', 'KU-MI', 'SI-KA', 'NE-NÄ', 'MA-TO', 'VE-SI', 'KO-TI', 'MÄ-KI', 'SA-TA', 'MU-NA', 'KI-SA', 'TU-PA', 'SU-SI', 'KI-VI', 'PE-SÄ', 'LA-VA', 'RA-HA', 'JO-KI', 'PI-PO', 'MA-MA', 'PA-PA', 'TÄ-TI', 'MÖ-KI', 'KY-LÄ', 'HY-VÄ', 'PU-SU', 'HE-PO', 'TU-LI', 'MU-TA', 'PA-LA', 'KA-SA', 'SA-KO', 'LO-KA', 'NA-MI', 'SA-LI', 'LE-LU', 'TO-SI', 'SO-TA', 'DI-NO', 'RE-KI', 'MÖ-RÖ', 'JU-NA', 'HI-RI'];
 /** Two-syllable words with a closed, long or diphthong syllable. */
 const MIX_WORDS = ['KIS-SA', 'AU-TO', 'TUU-LI', 'PAL-LO', 'MAI-TO', 'PUU-RO', 'KOI-RA', 'HII-RI', 'LEI-PÄ', 'SAU-NA', 'KUK-KA', 'NAL-LE', 'KAK-KU', 'PUL-LA', 'MUM-MO', 'VAA-RI', 'ÄI-TI', 'LIN-TU', 'KAR-HU', 'SUK-KA', 'HAT-TU', 'KEN-KÄ', 'TÄH-TI', 'POI-KA', 'TYT-TÖ', 'VAU-VA', 'PÖY-TÄ', 'TUO-LI', 'PIE-NI', 'SUO-MI', 'KUU-SI', 'KUU-MA', 'HEI-NÄ', 'LAI-VA', 'REP-PU', 'PUK-KI', 'MET-SÄ'];
 /** Words of three or more syllables. */
@@ -94,28 +94,31 @@ const shuffle = <T,>(a: T[]) => {
   return b;
 };
 
-/**
- * Pick the next card from a random enabled type. Cards that were missed
- * more often are proportionally more likely, and the previous card is avoided.
- */
-export function pickCard(pools: Card[][], misses: Record<string, number>, last: string | null): Card | null {
-  if (!pools.length) return null;
-  const pool = pools[Math.floor(Math.random() * pools.length)];
-  const cands = pool.length > 1 ? pool.filter(p => p.text !== last) : pool;
-  const w = cands.map(p => 1 + 2 * (misses[p.text] || 0));
+/** Pick one item with probability proportional to its weight. */
+export function weighted<T>(items: T[], weight: (t: T) => number): T {
+  const w = items.map(weight);
   let r = Math.random() * w.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < cands.length; i++) {
+  for (let i = 0; i < items.length; i++) {
     r -= w[i];
-    if (r <= 0) return cands[i];
+    if (r <= 0) return items[i];
   }
-  return cands[0];
+  return items[0];
 }
 
 /** The right card plus two distractors that look as similar as possible. */
 export function buildOptions(item: Card, pools: Card[][]): Card[] {
   const share = (o: Card) => o.parts.filter(x => item.parts.includes(x)).length + (o.type === item.type ? 2 : 0);
-  const others = shuffle(pools.flat().filter(o => o.text !== item.text))
-    .sort((a, b) => share(b) - share(a))
-    .slice(0, 2);
+  const seen = new Set([item.text]);
+  const unique = (cs: Card[]) => cs.filter(o => !seen.has(o.text) && seen.add(o.text));
+  let others = unique(shuffle(pools.flat())).sort((a, b) => share(b) - share(a)).slice(0, 2);
+  // Tiny pools (the first letters) would leave a coin toss; top up with unlearned cards of the same type.
+  if (others.length < 2) others = [...others, ...unique(shuffle(buildPool(item.type, [...VOWELS, ...CONSONANTS])))].slice(0, 2);
   return shuffle([item, ...others]);
 }
+
+/** A card's words, each split into syllables; everything but a sentence is one word. */
+export const wordsOf = (c: Card): string[][] =>
+  c.type === 'sentence' ? c.parts.map(w => w.split('-')) : isWord(c.type) ? [c.parts] : [[c.text]];
+
+/** Card text as shown on an option button, with syllable dots. */
+export const labelOf = (c: Card, dots = true) => wordsOf(c).map(w => w.join(dots ? '·' : '')).join(' ');

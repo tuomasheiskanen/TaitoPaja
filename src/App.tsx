@@ -5,7 +5,6 @@ export default function App() {
   return (
     <div className="app">
       <div className="moon" />
-      <div className="star" />
       <ReadingModule />
     </div>
   );

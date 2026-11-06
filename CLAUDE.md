@@ -11,19 +11,23 @@ works offline. Icons are generated from `public/favicon.svg` with `npm run icons
 
 ## Layout
 
-- `src/App.tsx` – app shell (night-sky background, moon/star decoration). Renders the
+- `src/App.tsx` – app shell (night-sky background, moon decoration). Renders the
   reading module directly; when a second skill is added, add a module menu here.
 - `src/shared/` – reusable across modules: `speech.ts` (Finnish TTS, `say`, `sayParts`),
   `sfx.ts` (synthesized boing/cheer via Web Audio, no audio files), `fx.ts` (confetti,
-  star dust, wobble/pop animations via Web Animations API), `storage.ts`, `icons.tsx`.
-- `src/modules/reading/` – letters/syllables/words module:
-  - `data.ts` – letter sets, word list, card generation (`buildPool`), weighted
-    card picking (`pickCard`), distractor options (`buildOptions`), `soundOf`.
+  star dust, wobble/pop/shake, flying star, halo via Web Animations API), `storage.ts`, `icons.tsx`.
+- `src/modules/reading/` – letters/syllables/words module, played as a path of islands:
+  - `data.ts` – letter sets, word lists, card types, card generation (`buildPool`),
+    distractor options (`buildOptions`), `weighted` pick, `labelOf`, `soundOf`.
+  - `levels.ts` – the level path (`LEVELS`: new letters and card types per island),
+    level card pools, goal per level (`goalOf`).
+  - `progress.ts` – persisted progress in localStorage key `taitopaja.path.v1`
+    (`mode`, `stars`, per-card `misses` and `known`, per-level progress) and the
+    advancement rules (`answer`, `nextCard`, daily limit). Migrates `mode` and
+    `misses` from the old `taitopaja.reading.v1`.
   - `speak.ts` – plays a card's clips (or falls back to device speech).
-  - `settings.ts` – persisted settings in localStorage key `taitopaja.reading.v1`
-    (`mode`, `focus` letters, card `types`, per-card `misses`).
-  - `ReadingModule.tsx` – screen state (picker / letters / quiz) and round state.
-  - `Picker.tsx`, `Letters.tsx`, `Quiz.tsx` – the three screens.
+  - `ReadingModule.tsx` – screen state (path / intro / quiz / level done) and round state.
+  - `Path.tsx`, `Intro.tsx`, `Quiz.tsx`, `LevelDone.tsx` – the screens.
 - `src/styles.css` – all styles; colors are CSS variables on `:root`. The app is a
   phone-width column (max 480px) using `100dvh` and safe-area insets.
 - `docs/` – ideas not yet implemented.
@@ -32,8 +36,22 @@ UI text is Finnish; code and comments are English.
 
 ## Design and deliberate deviations
 
-Source of truth for look and behaviour is the Claude Design file `TaitoPaja.dc.html`
-(link in README). Differences from the design, all intentional:
+Source of truth for look and behaviour is the Claude Design file `TaitoPaja v2.dc.html`
+in the TaitoPaja project (link in README). Differences from the design, all intentional:
+
+- Level advancement (owner-approved, to keep a feeling of progress without boredom):
+  goal = 2 × level's card count, clamped to 5–12; five first-try corrects in a row
+  finish a level early ("Lentäen läpi!"); otherwise the goal must be reached with
+  ≥ 70 % first-try corrects in the last 10 answers (the last goal dot waits for that,
+  dots never go down); after two misses in a row an already known card comes up;
+  ~30 % of cards review an earlier level; at most 2 new islands per day (the next
+  one shows ☾ "huomenna"); stars only for first-try corrects.
+- Every level that adds letters also has single-letter cards (the design skipped
+  them for K, P V and D).
+- Islands for diftongit, vaikeammat sanat, pitkät sanat and lauseet were added after
+  the design's levels; the last island ("Mikä-Mikä-maa") never ends and counts known
+  cards instead of a goal.
+- The design's "unlock all" and level-goal tweak props are not exposed.
 
 - Parent mode swipes record results: up = "osasi" (miss count −1), left =
   "harjoitellaan" (miss count +1), down = skip. The design only animated them.

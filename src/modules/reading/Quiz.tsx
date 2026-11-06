@@ -1,10 +1,10 @@
-import { useEffect, useRef, type Dispatch, type PointerEvent, type SetStateAction } from 'react';
-import { IconClose, IconSpeaker } from '../../shared/icons';
+import { useEffect, useRef, type Dispatch, type PointerEvent, type RefObject, type SetStateAction } from 'react';
+import { IconClose, IconSpeaker, IconStar } from '../../shared/icons';
 import { boing, cheer } from '../../shared/sfx';
 import { pop, startDust, wobble } from '../../shared/fx';
-import { isWord, typeInfo, type Card } from './data';
+import { labelOf, typeInfo, wordsOf, type Card } from './data';
 import { speakCard } from './speak';
-import type { Mode } from './settings';
+import type { Mode } from './progress';
 
 /** Show a dot between the syllables of a word (KA·LA). */
 const SYLLABLE_DOTS = true;
@@ -21,22 +21,42 @@ interface Props {
   mode: Mode;
   round: Round;
   setRound: Dispatch<SetStateAction<Round | null>>;
-  record: (text: string, right: boolean) => void;
+  /** First answer to a card: right = read it / picked it on the first try. */
+  record: (right: boolean) => void;
   next: () => void;
   stop: () => void;
   celebrate: () => void;
+  /** Header: level name, and either goal dots or a "known cards" count. */
+  levelLabel: string;
+  goal: { filled: number; total: number } | null;
+  knownText: string | null;
+  stars: number;
+  counterRef: RefObject<HTMLDivElement | null>;
 }
 
-export default function Quiz({ mode, round, setRound, record, next, stop, celebrate }: Props) {
+export default function Quiz({ mode, round, setRound, record, next, stop, celebrate, levelLabel, goal, knownText, stars, counterRef }: Props) {
   const { item } = round;
   return (
     <div className="screen quiz">
-      <div className="top-bar">
+      <div className="top-bar quiz-bar">
         <button className="round-btn" aria-label="Lopeta" onClick={stop}>
           <IconClose />
         </button>
-        <div className="type-label-top">{typeInfo(item.type).single}</div>
-        <div style={{ width: 44 }} />
+        <div className="quiz-level">
+          <div className="quiz-level-name">{levelLabel}</div>
+          {goal && (
+            <div className="goal-dots" aria-label={`${goal.filled} / ${goal.total}`}>
+              {Array.from({ length: goal.total }, (_, i) => (
+                <span key={i} className={i < goal.filled ? 'on' : ''} />
+              ))}
+            </div>
+          )}
+          {knownText && <div className="quiz-known">{knownText}</div>}
+        </div>
+        <div ref={counterRef} className="star-count">
+          <IconStar />
+          {stars}
+        </div>
       </div>
       {mode === 'parent' ? (
         <ParentCard item={item} record={record} next={next} celebrate={celebrate} />
@@ -47,11 +67,7 @@ export default function Quiz({ mode, round, setRound, record, next, stop, celebr
   );
 }
 
-/** A card's words, each split into syllables; everything but a sentence is one word. */
-const wordsOf = (c: Card): string[][] =>
-  c.type === 'sentence' ? c.parts.map(w => w.split('-')) : isWord(c.type) ? [c.parts] : [[c.text]];
-
-const label = (c: Card) => wordsOf(c).map(w => w.join(SYLLABLE_DOTS ? '·' : '')).join(' ');
+const label = (c: Card) => labelOf(c, SYLLABLE_DOTS);
 
 /* Adult shows the card; swipe up = read it, left = needs practice, down = skip. */
 function ParentCard({ item, record, next, celebrate }: Pick<Props, 'record' | 'next' | 'celebrate'> & { item: Card }) {
@@ -59,8 +75,6 @@ function ParentCard({ item, record, next, celebrate }: Pick<Props, 'record' | 'n
   const sparkRef = useRef<HTMLDivElement>(null);
   const drag = useRef<{ x: number; y: number; dx: number; dy: number } | null>(null);
   const busy = useRef(false);
-  const itemRef = useRef(item);
-  itemRef.current = item;
 
   useEffect(() => (sparkRef.current ? startDust(sparkRef.current) : undefined), []);
 
@@ -71,6 +85,7 @@ function ParentCard({ item, record, next, celebrate }: Pick<Props, 'record' | 'n
     const from = el.style.transform || 'none';
     el.style.transition = 'none';
     let a: Animation;
+    if (dir !== 'down') record(dir === 'up');
     if (dir === 'left') {
       boing();
       a = el.animate([
@@ -89,7 +104,6 @@ function ParentCard({ item, record, next, celebrate }: Pick<Props, 'record' | 'n
       a = el.animate([{ transform: from }, { transform: 'translateY(900px)' }], { duration: 300, easing: 'cubic-bezier(0.22,0.61,0.36,1)', fill: 'forwards' });
     }
     a.onfinish = () => {
-      if (dir !== 'down') record(itemRef.current.text, dir === 'up');
       next();
       el.getAnimations().forEach(x => x.cancel());
       el.style.transform = '';
@@ -175,13 +189,13 @@ function ChildChoice({ round, setRound, record, next, celebrate }: Pick<Props, '
     if (solved) return;
     const firstTry = !wrong.length;
     if (o.text === item.text) {
-      if (firstTry) record(item.text, true);
+      if (firstTry) record(true);
       setRound(r => r && { ...r, solved: true });
       cheer();
       celebrate();
       pop(el);
     } else {
-      if (firstTry) record(item.text, false);
+      if (firstTry) record(false);
       setRound(r => r && { ...r, wrong: r.wrong.includes(o.text) ? r.wrong : [...r.wrong, o.text] });
       boing();
       wobble(el);

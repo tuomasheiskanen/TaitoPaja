@@ -65,3 +65,35 @@ export const pop = (el: Element) =>
     [{ transform: 'scale(1)' }, { transform: 'scale(1.08)', offset: 0.4 }, { transform: 'scale(0.97)', offset: 0.7 }, { transform: 'scale(1)' }],
     { duration: 600, easing: 'ease-out' }
   );
+
+const STAR_SVG =
+  '<svg width="36" height="36" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD166"/></svg>';
+
+/** A star flies from the middle of the box into the target (the star counter), which then bumps. */
+export function flyStar(box: HTMLElement, target: HTMLElement) {
+  const b = box.getBoundingClientRect(), r = target.getBoundingClientRect();
+  const sx = b.width / 2 - 18, sy = b.height * 0.42 - 18, tx = r.left - b.left + 4, ty = r.top - b.top;
+  const s = document.createElement('div');
+  s.style.cssText = 'position:absolute;left:0;top:0;width:36px;height:36px;filter:drop-shadow(0 0 8px rgba(255,209,102,0.9));';
+  s.innerHTML = STAR_SVG;
+  box.appendChild(s);
+  const a = s.animate([
+    { transform: `translate(${sx}px,${sy}px) scale(0.3) rotate(0deg)`, opacity: 0 },
+    { transform: `translate(${sx}px,${sy - 30}px) scale(1.6) rotate(72deg)`, opacity: 1, offset: 0.3 },
+    { transform: `translate(${tx}px,${ty}px) scale(0.5) rotate(216deg)`, opacity: 1 }
+  ], { duration: reducedMotion() ? 400 : 1000, easing: 'cubic-bezier(0.5,0,0.3,1)', fill: 'forwards' });
+  a.onfinish = () => {
+    s.remove();
+    target.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 360, easing: 'ease-out' });
+  };
+}
+
+export const shake = (el: Element) =>
+  el.animate(
+    [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(-3px)' }, { transform: 'translateX(0)' }],
+    { duration: 360, easing: 'ease-out' }
+  );
+
+/** A ring that keeps growing and fading, around the current island. */
+export const halo = (el: Element) =>
+  reducedMotion() ? null : el.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(1.7)', opacity: 0 }], { duration: 1800, iterations: Infinity, easing: 'ease-out' });
