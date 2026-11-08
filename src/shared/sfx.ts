@@ -31,7 +31,8 @@ export function unlockAudio() {
       // Audio unavailable.
     }
   };
-  for (const ev of ['pointerdown', 'touchend', 'keydown']) window.addEventListener(ev, kick, { capture: true, passive: true });
+  // Safari (desktop and iOS) only counts some of these as a gesture that may start audio; click and touchend always do.
+  for (const ev of ['pointerdown', 'mousedown', 'mouseup', 'click', 'touchstart', 'touchend', 'keydown']) window.addEventListener(ev, kick, { capture: true, passive: true });
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
   });
