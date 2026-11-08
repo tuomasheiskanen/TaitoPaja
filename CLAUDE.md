@@ -30,7 +30,8 @@ works offline. Icons are generated from `public/favicon.svg` with `npm run icons
   - `speak.ts` – plays a card's clips (or falls back to device speech).
   - `ReadingModule.tsx` – screen state (path / intro / quiz / settings / level done) and round state.
   - `Path.tsx`, `Intro.tsx`, `Quiz.tsx`, `LevelDone.tsx`, `Settings.tsx` – the screens.
-    Settings (gear on the path) lets the parent pick a starting level (`startFrom`:
+    Settings (gear on the path) lets the parent choose the mode (parent shows / child picks),
+    pick a starting level (`startFrom`:
     earlier levels marked done as "skipped", not counted toward the daily limit)
     or reset all progress (`resetProgress`); both need a second tap to confirm.
 - `src/styles.css` – all styles; colors are CSS variables on `:root`. The app is a
@@ -57,8 +58,9 @@ in the TaitoPaja project (link in README). Differences from the design, all inte
   the design's levels; the last island ("Mikä-Mikä-maa") never ends and counts known
   cards instead of a goal.
 - The design's "unlock all" and level-goal tweak props are not exposed.
-- A level starts by tapping its island (the design's start button was removed; a hint
-  line "Napauta saarta ja aloita" sits under the mode switch). The intro screen adds
+- A level starts by tapping its island (the design's start button and bottom bar were
+  removed). The parent/child mode switch lives in Settings ("Pelitapa"), not on the
+  path; the path only shows a "☾ Uusi saari aukeaa huomenna" note when the daily limit is hit. The intro screen adds
   a chime, confetti, spinning rays, cards that spin in and float, and star bursts on tap.
 - Finishing the last regular island opens a finale (`Finale.tsx`, instead of the
   level-done overlay): fanfare, the fairy flies up, fireworks, and a "Lukutaituri"

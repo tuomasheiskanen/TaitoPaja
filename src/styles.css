@@ -136,10 +136,10 @@ h1, p { margin: 0; }
 .node.lock { background: rgba(255, 255, 255, 0.1); cursor: default; }
 .node.lock > span { background: #18265c; color: #6f7bb0; }
 
-.path-bottom {
-  padding: 12px 20px calc(24px + var(--safe-bottom)); background: rgba(19, 32, 79, 0.9);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line);
-  display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 2;
+.path-rest-note {
+  position: absolute; left: 50%; bottom: calc(20px + var(--safe-bottom)); transform: translateX(-50%); z-index: 2;
+  padding: 8px 16px; border-radius: 999px; background: rgba(19, 32, 79, 0.9); border: 1px solid var(--line);
+  font-size: 14px; font-weight: 500; color: var(--gold); white-space: nowrap;
 }
 .segmented { display: flex; gap: 4px; padding: 4px; background: rgba(255, 255, 255, 0.12); border-radius: 12px; }
 .segmented button {
@@ -147,7 +147,6 @@ h1, p { margin: 0; }
   background: transparent; color: var(--ink-soft); transition: background 280ms;
 }
 .segmented button.on { background: var(--gold); color: var(--navy); }
-.path-hint { text-align: center; font-size: 15px; font-weight: 500; color: var(--gold); padding: 2px 0 4px; }
 
 /* ---- Settings ---- */
 .path-head-actions { display: flex; align-items: center; gap: 8px; }

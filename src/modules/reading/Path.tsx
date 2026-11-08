@@ -4,24 +4,18 @@ import { halo, pop, shake } from '../../shared/fx';
 import { typeInfo } from './data';
 import { Medal } from './Finale';
 import { LAST, LEVELS, goalOf } from './levels';
-import { dots, finishedOn, isDone, journey, reach, resting, selIdx, unlocked, type Mode, type PathState } from './progress';
+import { dots, finishedOn, isDone, journey, reach, resting, selIdx, unlocked, type PathState } from './progress';
 
 interface Props {
   state: PathState;
   /** Level just finished; the path scrolls from it to the next one. */
   justDone: number | null;
   counterRef: React.RefObject<HTMLDivElement | null>;
-  setMode: (m: Mode) => void;
   start: (i: number) => void;
   celebrate: () => void;
   openSettings: () => void;
   openFinale: () => void;
 }
-
-const MODES: { id: Mode; label: string }[] = [
-  { id: 'parent', label: 'Aikuinen näyttää' },
-  { id: 'child', label: 'Lapsi valitsee' }
-];
 
 // Geometry of the winding path; level 0 is at the bottom.
 const N = LEVELS.length;
@@ -43,7 +37,7 @@ const curve = (a: [number, number][]) =>
 
 type IslandState = 'done' | 'cur' | 'open' | 'rest' | 'lock';
 
-export default function Path({ state, justDone, counterRef, setMode, start, celebrate, openSettings, openFinale }: Props) {
+export default function Path({ state, justDone, counterRef, start, celebrate, openSettings, openFinale }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const haloRef = useRef<HTMLDivElement>(null);
   const r = reach(state), rest = resting(state), sel = selIdx(state);
@@ -154,16 +148,7 @@ export default function Path({ state, justDone, counterRef, setMode, start, cele
         </div>
       </div>
 
-      <div className="path-bottom">
-        <div className="segmented small" role="radiogroup">
-          {MODES.map(m => (
-            <button key={m.id} role="radio" aria-checked={state.mode === m.id} className={state.mode === m.id ? 'on' : ''} onClick={() => setMode(m.id)}>
-              {m.label}
-            </button>
-          ))}
-        </div>
-        <div className="path-hint">{rest ? '☾ Uusi saari aukeaa huomenna' : 'Napauta saarta ja aloita'}</div>
-      </div>
+      {rest && <div className="path-rest-note">☾ Uusi saari aukeaa huomenna</div>}
     </div>
   );
 }

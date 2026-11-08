@@ -83,7 +83,6 @@ export default function ReadingModule() {
           state={state}
           justDone={justDone}
           counterRef={counterRef}
-          setMode={mode => update({ mode })}
           start={start}
           celebrate={celebrate}
           openSettings={() => setScreen('settings')}
@@ -93,6 +92,7 @@ export default function ReadingModule() {
       {screen === 'settings' && (
         <Settings
           state={state}
+          setMode={mode => update({ mode })}
           onBack={toPath}
           onStartFrom={k => {
             setState(s => startFrom(s, k));
