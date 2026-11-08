@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import { IconSettings, IconStar } from '../../shared/icons';
-import { halo, shake } from '../../shared/fx';
+import { halo, pop, shake } from '../../shared/fx';
 import { typeInfo } from './data';
 import { LAST, LEVELS, goalOf } from './levels';
 import { dots, isDone, journey, reach, resting, selIdx, unlocked, type Mode, type PathState } from './progress';
@@ -10,7 +10,6 @@ interface Props {
   /** Level just finished; the path scrolls from it to the next one. */
   justDone: number | null;
   counterRef: React.RefObject<HTMLDivElement | null>;
-  select: (i: number) => void;
   setMode: (m: Mode) => void;
   start: (i: number) => void;
   celebrate: () => void;
@@ -42,7 +41,7 @@ const curve = (a: [number, number][]) =>
 
 type IslandState = 'done' | 'cur' | 'open' | 'rest' | 'lock';
 
-export default function Path({ state, justDone, counterRef, select, setMode, start, celebrate, openSettings }: Props) {
+export default function Path({ state, justDone, counterRef, setMode, start, celebrate, openSettings }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const haloRef = useRef<HTMLDivElement>(null);
   const r = reach(state), rest = resting(state), sel = selIdx(state);
@@ -75,13 +74,17 @@ export default function Path({ state, justDone, counterRef, select, setMode, sta
   const lit = allDone ? [...pts, DEST] : pts.slice(0, r + 1);
   const pct = Math.round(journey(state) * 100);
 
-  const L = LEVELS[sel], selDone = isDone(state, sel), started = (state.levels[sel]?.recent.length ?? 0) > 0;
-  const cta = sel === LAST ? 'Mikä-Mikä-maahan' : selDone ? 'Harjoittele tasoa ' + (sel + 1) : started ? 'Jatka tasoa ' + (sel + 1) : 'Aloita taso ' + (sel + 1);
-  const restNote = rest && sel === r - 1;
-
+  const starting = useRef(false);
+  /* Tapping an open island starts it, after a short pop so the tap is felt. */
   const onNode = (i: number, ev: MouseEvent<HTMLButtonElement>) => {
-    if (unlocked(state, i)) select(i);
-    else shake(ev.currentTarget);
+    if (!unlocked(state, i)) {
+      shake(ev.currentTarget);
+      return;
+    }
+    if (starting.current) return;
+    starting.current = true;
+    pop(ev.currentTarget);
+    setTimeout(() => start(i), 260);
   };
 
   return (
@@ -124,7 +127,7 @@ export default function Path({ state, justDone, counterRef, select, setMode, sta
             return (
               <button
                 key={i}
-                className={'node ' + st + (i === sel && st !== 'cur' ? ' sel' : '')}
+                className={'node ' + st}
                 aria-label={st === 'rest' ? 'Uusi saari aukeaa huomenna' : l.title}
                 onClick={e => onNode(i, e)}
                 style={{
@@ -151,10 +154,7 @@ export default function Path({ state, justDone, counterRef, select, setMode, sta
             </button>
           ))}
         </div>
-        <button className="btn-primary cta" onClick={() => start(sel)}>
-          <span className="cta-label">{cta}</span>
-          <span className="cta-sub">{restNote ? 'Uusi saari aukeaa huomenna' : L.title}</span>
-        </button>
+        <div className="path-hint">{rest ? '☾ Uusi saari aukeaa huomenna' : 'Napauta saarta ja aloita'}</div>
       </div>
     </div>
   );

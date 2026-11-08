@@ -81,7 +81,6 @@ export default function ReadingModule() {
           state={state}
           justDone={justDone}
           counterRef={counterRef}
-          select={i => update({ sel: i })}
           setMode={mode => update({ mode })}
           start={start}
           celebrate={celebrate}
@@ -104,7 +103,7 @@ export default function ReadingModule() {
           }}
         />
       )}
-      {screen === 'intro' && <Intro level={i} onBack={toPath} onBegin={next} />}
+      {screen === 'intro' && <Intro level={i} onBack={toPath} onBegin={next} celebrate={celebrate} />}
       {screen === 'quiz' && round && (
         <Quiz
           mode={state.mode}

@@ -86,3 +86,24 @@ export function cheer() {
     // Audio unavailable.
   }
 }
+
+/** Bright rising bell arpeggio for something new appearing. */
+export function chime() {
+  try {
+    const ctx = audio();
+    const t = ctx.currentTime + 0.02;
+    [1046.5, 1318.5, 1568, 2093].forEach((f, k) => {
+      const s = t + k * 0.09, o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = f;
+      o2.type = 'sine'; o2.frequency.value = f * 2.01;
+      const g2 = ctx.createGain(); g2.gain.value = 0.25;
+      g.gain.setValueAtTime(0.0001, s);
+      g.gain.exponentialRampToValueAtTime(0.22, s + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, s + 0.9);
+      o.connect(g); o2.connect(g2); g2.connect(g); g.connect(ctx.destination);
+      o.start(s); o2.start(s); o.stop(s + 0.95); o2.stop(s + 0.95);
+    });
+  } catch {
+    // Audio unavailable.
+  }
+}

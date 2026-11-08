@@ -55,6 +55,9 @@ in the TaitoPaja project (link in README). Differences from the design, all inte
   the design's levels; the last island ("Mikä-Mikä-maa") never ends and counts known
   cards instead of a goal.
 - The design's "unlock all" and level-goal tweak props are not exposed.
+- A level starts by tapping its island (the design's start button was removed; a hint
+  line "Napauta saarta ja aloita" sits under the mode switch). The intro screen adds
+  a chime, confetti, spinning rays, cards that spin in and float, and star bursts on tap.
 
 - Parent mode swipes record results: up = "osasi" (miss count −1), left =
   "harjoitellaan" (miss count +1), down = skip. The design only animated them.

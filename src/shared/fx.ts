@@ -97,3 +97,35 @@ export const shake = (el: Element) =>
 /** A ring that keeps growing and fading, around the current island. */
 export const halo = (el: Element) =>
   reducedMotion() ? null : el.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(1.7)', opacity: 0 }], { duration: 1800, iterations: Infinity, easing: 'ease-out' });
+
+/** Little stars shooting out from the element's centre. The element must be positioned. */
+export function burst(el: HTMLElement, count = 12) {
+  const n = reducedMotion() ? 4 : count, w = el.clientWidth, h = el.clientHeight;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('div'), size = 10 + Math.random() * 10;
+    const ang = (i / n) * Math.PI * 2 + Math.random() * 0.4, dist = Math.max(w, h) * (0.55 + Math.random() * 0.35);
+    s.style.cssText = `position:absolute;left:${w / 2 - size / 2}px;top:${h / 2 - size / 2}px;width:${size}px;height:${size}px;pointer-events:none;filter:drop-shadow(0 0 6px rgba(255,209,102,0.9));`;
+    s.innerHTML = STAR_SVG.replace(/width="36" height="36"/, `width="${size}" height="${size}"`);
+    el.appendChild(s);
+    const a = s.animate([
+      { transform: 'translate(0,0) scale(0.2) rotate(0deg)', opacity: 1 },
+      { transform: `translate(${Math.cos(ang) * dist * 0.8}px,${Math.sin(ang) * dist * 0.8}px) scale(1) rotate(140deg)`, opacity: 1, offset: 0.6 },
+      { transform: `translate(${Math.cos(ang) * dist}px,${Math.sin(ang) * dist}px) scale(0.3) rotate(220deg)`, opacity: 0 }
+    ], { duration: 700 + Math.random() * 300, easing: 'cubic-bezier(0.2,0.7,0.3,1)', fill: 'forwards' });
+    a.onfinish = () => s.remove();
+  }
+}
+
+/** Spin-and-bounce entrance, e.g. for a card appearing. */
+export const popIn = (el: Element, delay = 0) =>
+  el.animate(
+    reducedMotion()
+      ? [{ opacity: 0 }, { opacity: 1 }]
+      : [
+          { transform: 'scale(0) rotate(-30deg)', opacity: 0 },
+          { transform: 'scale(1.18) rotate(8deg)', opacity: 1, offset: 0.6 },
+          { transform: 'scale(0.94) rotate(-3deg)', offset: 0.8 },
+          { transform: 'scale(1) rotate(0deg)', opacity: 1 }
+        ],
+    { duration: 700, delay, easing: 'cubic-bezier(0.22,0.61,0.36,1)', fill: 'backwards' }
+  );
