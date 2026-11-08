@@ -4,14 +4,13 @@ import { LEVELS } from './levels';
 
 interface Props {
   level: number;
-  fast: boolean;
   /** The next island waits until tomorrow (daily limit reached). */
   nextTomorrow: boolean;
   onContinue: () => void;
   onStay: () => void;
 }
 
-export default function LevelDone({ level, fast, nextTomorrow, onContinue, onStay }: Props) {
+export default function LevelDone({ level, nextTomorrow, onContinue, onStay }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const next = LEVELS[level + 1];
 
@@ -28,8 +27,8 @@ export default function LevelDone({ level, fast, nextTomorrow, onContinue, onSta
         <div className="done-star">
           <IconStar size={96} />
         </div>
-        <div className="done-title">{fast ? 'Lentäen läpi!' : `Taso ${level + 1} valmis!`}</div>
-        <div className="done-text">{fast ? 'Viisi oikein putkeen. Tämä taso oli helppo!' : 'Uusi tähti syttyi polullesi.'}</div>
+        <div className="done-title">Taso {level + 1} valmis!</div>
+        <div className="done-text">Uusi tähti syttyi polullesi.</div>
         {next && (
           <div className="done-next">
             <div className="done-badge">{nextTomorrow ? '☾' : next.badge}</div>

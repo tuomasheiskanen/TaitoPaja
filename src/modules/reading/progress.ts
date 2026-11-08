@@ -6,8 +6,6 @@ import { LAST, LEVELS, focusAt, goalOf, levelPools, reviewCards } from './levels
 const KEY = 'taitopaja.path.v1';
 const OLD_KEY = 'taitopaja.reading.v1';
 
-/** First-try corrects in a row that finish a level early. */
-export const FAST_STREAK = 5;
 /** Share of first-try corrects in the last answers needed to finish a level. */
 const ACCURACY = 0.7;
 const RECENT = 10;
@@ -25,10 +23,8 @@ export interface LevelProgress {
   credits: number;
   /** Last answers, true = first-try correct. */
   recent: boolean[];
-  streak: number;
   /** Day the level was finished (YYYY-MM-DD). */
   done?: string;
-  fast?: boolean;
 }
 
 export interface PathState {
@@ -54,7 +50,7 @@ export const today = () => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 };
 
-const lp = (s: PathState, i: number): LevelProgress => s.levels[i] ?? { credits: 0, recent: [], streak: 0 };
+const lp = (s: PathState, i: number): LevelProgress => s.levels[i] ?? { credits: 0, recent: [] };
 export const isDone = (s: PathState, i: number) => !!s.levels[i]?.done;
 
 /** First level not finished yet. */
@@ -106,14 +102,12 @@ export const knownCount = (s: PathState) => Object.keys(s.known).filter(t => (s.
 export function answer(s: PathState, i: number, card: Card, right: boolean) {
   const p = lp(s, i), n = s.misses[card.text] || 0;
   const recent = [...p.recent, right].slice(-RECENT);
-  const next: LevelProgress = { ...p, recent, credits: p.credits + (right ? 1 : 0), streak: right ? p.streak + 1 : 0 };
+  const next: LevelProgress = { ...p, recent, credits: p.credits + (right ? 1 : 0) };
   let finished = false;
   if (!p.done && i < LAST) {
     const accurate = recent.filter(Boolean).length >= ACCURACY * recent.length;
-    const fast = next.streak >= FAST_STREAK && next.credits < goalOf(i);
-    if (fast || (next.credits >= goalOf(i) && accurate)) {
+    if (next.credits >= goalOf(i) && accurate) {
       next.done = today();
-      next.fast = fast;
       finished = true;
     }
   }
@@ -174,6 +168,6 @@ const SKIPPED = 'skipped';
  */
 export function startFrom(s: PathState, k: number): PathState {
   const levels: Record<number, LevelProgress> = {};
-  for (let i = 0; i < k && i < LAST; i++) levels[i] = { credits: goalOf(i), recent: [], streak: 0, done: SKIPPED };
+  for (let i = 0; i < k && i < LAST; i++) levels[i] = { credits: goalOf(i), recent: [], done: SKIPPED };
   return { ...s, levels, sel: k };
 }

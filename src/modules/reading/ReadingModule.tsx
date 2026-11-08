@@ -18,7 +18,7 @@ export default function ReadingModule() {
   const [state, setState] = useState(loadPath);
   const [screen, setScreen] = useState<'path' | 'intro' | 'quiz' | 'settings'>('path');
   const [round, setRound] = useState<Round | null>(null);
-  const [done, setDone] = useState<{ level: number; fast: boolean } | null>(null);
+  const [done, setDone] = useState<number | null>(null);
   const [justDone, setJustDone] = useState<number | null>(null);
   const stateRef = useRef(state);
   stateRef.current = state;
@@ -62,7 +62,7 @@ export default function ReadingModule() {
     setState(s);
     missRun.current = right ? 0 : missRun.current + 1;
     if (right && fxRef.current && counterRef.current) flyStar(fxRef.current, counterRef.current);
-    if (finished) setTimeout(() => setDone({ level: i, fast: !!s.levels[i].fast }), 1300);
+    if (finished) setTimeout(() => setDone(i), 1300);
   };
 
   const toPath = () => {
@@ -121,14 +121,13 @@ export default function ReadingModule() {
           counterRef={counterRef}
         />
       )}
-      {done && (
+      {done != null && (
         <LevelDone
-          level={done.level}
-          fast={done.fast}
+          level={done}
           nextTomorrow={resting(state)}
           onContinue={() => {
             stopAll();
-            setJustDone(done.level);
+            setJustDone(done);
             setDone(null);
             setState(s => ({ ...s, sel: selIdx({ ...s, sel: null }) }));
             setScreen('path');

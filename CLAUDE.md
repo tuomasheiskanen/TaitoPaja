@@ -43,10 +43,10 @@ Source of truth for look and behaviour is the Claude Design file `TaitoPaja v2.d
 in the TaitoPaja project (link in README). Differences from the design, all intentional:
 
 - Level advancement (owner-approved, to keep a feeling of progress without boredom):
-  goal = 2 × level's card count, clamped to 5–12; five first-try corrects in a row
-  finish a level early ("Lentäen läpi!"); otherwise the goal must be reached with
-  ≥ 70 % first-try corrects in the last 10 answers (the last goal dot waits for that,
-  dots never go down); after two misses in a row an already known card comes up;
+  goal = 2 × level's card count, clamped to 5–12; a level finishes only when the goal
+  is reached with ≥ 70 % first-try corrects in the last 10 answers (the last goal dot
+  waits for that, dots never go down). An early-finish "fast track" (5 in a row) was
+  tried and removed: the owner found levels ending with dots still empty confusing; after two misses in a row an already known card comes up;
   ~30 % of cards review an earlier level; at most 5 new islands per day (the next
   one shows ☾ "huomenna"); stars only for first-try corrects.
 - Every level that adds letters also has single-letter cards (the design skipped
