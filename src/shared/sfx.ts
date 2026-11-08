@@ -6,8 +6,35 @@ export function audio() {
     const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     ctx = new AC();
   }
-  if (ctx.state === 'suspended') ctx.resume();
+  // iOS uses "interrupted" (after a call or app switch) as well as "suspended".
+  if (ctx.state !== 'running') ctx.resume().catch(() => {});
   return ctx;
+}
+
+/**
+ * Make sound work on phones. Browsers only start audio inside a user gesture, and many
+ * sounds here play after a clip loads or from a timer, so every tap (re)starts the
+ * audio context and plays a silent sample. On iPhone, the "playback" audio session
+ * keeps sounds audible when the ring/silent switch is on silent (Safari 16.4+).
+ */
+export function unlockAudio() {
+  const session = (navigator as unknown as { audioSession?: { type: string } }).audioSession;
+  if (session) session.type = 'playback';
+  const kick = () => {
+    try {
+      const c = audio();
+      const src = c.createBufferSource();
+      src.buffer = c.createBuffer(1, 1, 22050);
+      src.connect(c.destination);
+      src.start(0);
+    } catch {
+      // Audio unavailable.
+    }
+  };
+  for (const ev of ['pointerdown', 'touchend', 'keydown']) window.addEventListener(ev, kick, { capture: true, passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
+  });
 }
 
 /** Cartoon "boing" for a miss. */
@@ -103,6 +130,38 @@ export function chime() {
       o.connect(g); o2.connect(g2); g2.connect(g); g.connect(ctx.destination);
       o.start(s); o2.start(s); o.stop(s + 0.95); o2.stop(s + 0.95);
     });
+  } catch {
+    // Audio unavailable.
+  }
+}
+
+/** Short brass-like fanfare for the end of the whole journey. */
+export function fanfare() {
+  try {
+    const ctx = audio();
+    const t = ctx.currentTime + 0.05;
+    // [start (beats), length (beats), frequencies]; one beat = 0.16 s.
+    const notes: [number, number, number[]][] = [
+      [0, 1, [392]], [1, 1, [392]], [2, 1, [392]], [3, 3, [523.3]],
+      [6, 1.5, [392]], [7.5, 1.5, [523.3]], [9, 7, [523.3, 659.3, 784]]
+    ];
+    const master = ctx.createGain();
+    master.gain.value = 0.5;
+    master.connect(ctx.destination);
+    for (const [at, len, freqs] of notes) {
+      const s = t + at * 0.16, d = len * 0.16;
+      for (const f of freqs) {
+        const o = ctx.createOscillator(), lp = ctx.createBiquadFilter(), g = ctx.createGain();
+        o.type = 'sawtooth'; o.frequency.value = f;
+        lp.type = 'lowpass'; lp.frequency.setValueAtTime(800, s); lp.frequency.linearRampToValueAtTime(2600, s + 0.06); lp.Q.value = 2;
+        g.gain.setValueAtTime(0.0001, s);
+        g.gain.exponentialRampToValueAtTime(0.28 / freqs.length + 0.08, s + 0.03);
+        g.gain.setValueAtTime(0.28 / freqs.length + 0.08, s + d * 0.7);
+        g.gain.exponentialRampToValueAtTime(0.0001, s + d + 0.12);
+        o.connect(lp); lp.connect(g); g.connect(master);
+        o.start(s); o.stop(s + d + 0.15);
+      }
+    }
   } catch {
     // Audio unavailable.
   }

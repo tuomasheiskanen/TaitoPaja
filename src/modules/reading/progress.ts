@@ -171,3 +171,9 @@ export function startFrom(s: PathState, k: number): PathState {
   for (let i = 0; i < k && i < LAST; i++) levels[i] = { credits: goalOf(i), recent: [], done: SKIPPED };
   return { ...s, levels, sel: k };
 }
+
+/** Day the whole path was finished by playing (not by choosing a later starting point). */
+export function finishedOn(s: PathState): string | null {
+  const d = s.levels[LAST - 1]?.done;
+  return d && d !== SKIPPED ? d : null;
+}

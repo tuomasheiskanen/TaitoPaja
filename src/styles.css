@@ -219,6 +219,48 @@ h1, p { margin: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
 .chip { padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.1); font-size: 14px; font-weight: 500; }
 
+/* ---- Finale ---- */
+.path-dest.medal { left: 50%; right: auto; top: 6px; transform: translateX(-50%); border: 0; background: none; padding: 0; cursor: pointer; z-index: 1; }
+.finale {
+  position: absolute; inset: 0; z-index: 9; overflow: hidden;
+  background: radial-gradient(circle at 50% 35%, #2a3a80 0%, #13204f 55%, #0b1438 100%);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+}
+.finale-rays {
+  position: absolute; left: 50%; top: 34%; width: 700px; height: 700px; margin: -350px 0 0 -350px; pointer-events: none;
+  background: repeating-conic-gradient(rgba(255, 209, 102, 0.14) 0deg 8deg, transparent 8deg 20deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0, #000 18%, transparent 60%);
+  mask-image: radial-gradient(circle, #000 0, #000 18%, transparent 60%);
+  animation: rays-spin 30s linear infinite;
+}
+.finale-fairy {
+  position: absolute; left: 50%; top: 30%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%;
+  background: #fff8dc; box-shadow: 0 0 18px 8px rgba(255, 209, 102, 0.7); opacity: 0;
+}
+.finale-fairy .wing {
+  position: absolute; top: -10px; width: 12px; height: 20px; border-radius: 50%; background: rgba(189, 230, 255, 0.75);
+  animation: flap 0.28s ease-in-out infinite;
+}
+.finale-fairy .wing.l { left: -9px; transform: rotate(-35deg); }
+.finale-fairy .wing.r { right: -9px; transform: rotate(35deg); }
+@keyframes flap { 50% { height: 6px; top: -3px; } }
+.finale-content {
+  position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+  opacity: 0; transform: translateY(20px); transition: opacity 600ms 300ms, transform 600ms 300ms;
+}
+.finale-content.shown { opacity: 1; transform: none; }
+.finale-medal { display: flex; flex-direction: column; align-items: center; filter: drop-shadow(0 0 30px rgba(255, 209, 102, 0.6)); animation: float 3.2s ease-in-out infinite alternate; }
+.medal-label {
+  margin-top: -10px; padding: 6px 18px; border-radius: 999px; background: var(--gold); color: var(--navy);
+  font-size: 18px; font-weight: 700; letter-spacing: 0.04em; box-shadow: 0 4px 0 var(--gold-shadow);
+}
+.finale-title { font-size: 30px; font-weight: 700; color: var(--gold); line-height: 1.15; text-shadow: 0 0 18px rgba(255, 209, 102, 0.5); }
+.finale-text { font-size: 17px; color: var(--ink-soft); }
+.finale-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 10px; }
+@media (prefers-reduced-motion: reduce) {
+  .finale-rays, .finale-medal, .finale-fairy .wing { animation: none; }
+}
+
 /* ---- Level done ---- */
 .overlay {
   position: absolute; inset: 0; z-index: 9; background: rgba(7, 13, 38, 0.8);

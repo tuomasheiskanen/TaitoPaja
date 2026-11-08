@@ -2,8 +2,9 @@ import { useEffect, useLayoutEffect, useRef, type MouseEvent, type ReactNode } f
 import { IconSettings, IconStar } from '../../shared/icons';
 import { halo, pop, shake } from '../../shared/fx';
 import { typeInfo } from './data';
+import { Medal } from './Finale';
 import { LAST, LEVELS, goalOf } from './levels';
-import { dots, isDone, journey, reach, resting, selIdx, unlocked, type Mode, type PathState } from './progress';
+import { dots, finishedOn, isDone, journey, reach, resting, selIdx, unlocked, type Mode, type PathState } from './progress';
 
 interface Props {
   state: PathState;
@@ -14,6 +15,7 @@ interface Props {
   start: (i: number) => void;
   celebrate: () => void;
   openSettings: () => void;
+  openFinale: () => void;
 }
 
 const MODES: { id: Mode; label: string }[] = [
@@ -41,7 +43,7 @@ const curve = (a: [number, number][]) =>
 
 type IslandState = 'done' | 'cur' | 'open' | 'rest' | 'lock';
 
-export default function Path({ state, justDone, counterRef, setMode, start, celebrate, openSettings }: Props) {
+export default function Path({ state, justDone, counterRef, setMode, start, celebrate, openSettings, openFinale }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const haloRef = useRef<HTMLDivElement>(null);
   const r = reach(state), rest = resting(state), sel = selIdx(state);
@@ -116,9 +118,15 @@ export default function Path({ state, justDone, counterRef, setMode, start, cele
       <div ref={scrollRef} className="path-scroll">
         <div className="path-canvas" style={{ height: PH }}>
           <Scenery lit={lit} allDone={allDone} states={LEVELS.map((_, i) => stOf(i))} />
-          <div className="path-dest" style={{ opacity: allDone ? 1 : 0.75 }}>
-            <IconStar size={56} fill="#FFF3C4" />
-          </div>
+          {finishedOn(state) ? (
+            <button className="path-dest medal" aria-label="Lukutaituri-mitali" onClick={openFinale}>
+              <Medal size={64} />
+            </button>
+          ) : (
+            <div className="path-dest" style={{ opacity: allDone ? 1 : 0.75 }}>
+              <IconStar size={56} fill="#FFF3C4" />
+            </div>
+          )}
           {!allDone && !rest && <div ref={haloRef} className="halo" style={{ left: pts[r][0] - 36, top: pts[r][1] - 50 }} />}
           {LEVELS.map((l, i) => {
             const st = stOf(i), size = st === 'cur' ? 72 : st === 'done' ? 60 : 54;

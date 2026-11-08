@@ -14,8 +14,10 @@ works offline. Icons are generated from `public/favicon.svg` with `npm run icons
 - `src/App.tsx` – app shell (night-sky background, moon decoration). Renders the
   reading module directly; when a second skill is added, add a module menu here.
 - `src/shared/` – reusable across modules: `speech.ts` (Finnish TTS, `say`, `sayParts`),
-  `sfx.ts` (synthesized boing/cheer via Web Audio, no audio files), `fx.ts` (confetti,
-  star dust, wobble/pop/shake, flying star, halo via Web Animations API), `storage.ts`, `icons.tsx`.
+  `sfx.ts` (synthesized boing/cheer/chime/fanfare via Web Audio, no audio files; `unlockAudio`
+  (called in `main.tsx`) restarts the shared AudioContext on every tap, resumes it after
+  iOS interruptions and sets the iOS "playback" audio session so the silent switch doesn't mute it), `fx.ts` (confetti,
+  star dust, wobble/pop/shake, flying star, halo, star burst, pop-in, fireworks via Web Animations API), `storage.ts`, `icons.tsx`.
 - `src/modules/reading/` – letters/syllables/words module, played as a path of islands:
   - `data.ts` – letter sets, word lists, card types, card generation (`buildPool`),
     distractor options (`buildOptions`), `weighted` pick, `labelOf`, `soundOf`.
@@ -58,6 +60,10 @@ in the TaitoPaja project (link in README). Differences from the design, all inte
 - A level starts by tapping its island (the design's start button was removed; a hint
   line "Napauta saarta ja aloita" sits under the mode switch). The intro screen adds
   a chime, confetti, spinning rays, cards that spin in and float, and star bursts on tap.
+- Finishing the last regular island opens a finale (`Finale.tsx`, instead of the
+  level-done overlay): fanfare, the fairy flies up, fireworks, and a "Lukutaituri"
+  medal that then replaces the star at the top of the path (tap it to replay). Only
+  earned by playing: levels skipped via a starting point don't count (`finishedOn`).
 
 - Parent mode swipes record results: up = "osasi" (miss count −1), left =
   "harjoitellaan" (miss count +1), down = skip. The design only animated them.

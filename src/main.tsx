@@ -8,6 +8,9 @@ import '@fontsource/andika/latin-400.css';
 import '@fontsource/andika/latin-700.css';
 import './styles.css';
 import App from './App';
+import { unlockAudio } from './shared/sfx';
+
+unlockAudio();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

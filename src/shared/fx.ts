@@ -129,3 +129,34 @@ export const popIn = (el: Element, delay = 0) =>
         ],
     { duration: 700, delay, easing: 'cubic-bezier(0.22,0.61,0.36,1)', fill: 'backwards' }
   );
+
+/** One firework: sparks burst from (x, y) inside the box, then drift down and fade. */
+export function firework(box: HTMLElement, x: number, y: number, color: string) {
+  const n = reducedMotion() ? 10 : 36;
+  for (let i = 0; i < n; i++) {
+    const p = document.createElement('div'), size = 3 + Math.random() * 3;
+    const ang = (i / n) * Math.PI * 2, dist = 70 + Math.random() * 60;
+    const dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist;
+    p.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:${size}px;height:${size}px;border-radius:50%;background:${color};box-shadow:0 0 8px 2px ${color};pointer-events:none;`;
+    box.appendChild(p);
+    const a = p.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: `translate(${dx}px,${dy}px) scale(1)`, opacity: 1, offset: 0.45 },
+      { transform: `translate(${dx * 1.1}px,${dy * 1.1 + 60}px) scale(0.4)`, opacity: 0 }
+    ], { duration: 1300 + Math.random() * 400, easing: 'cubic-bezier(0.1,0.7,0.3,1)', fill: 'forwards' });
+    a.onfinish = () => p.remove();
+  }
+}
+
+/** Fireworks at random spots in the upper part of the box, until the returned stop function is called. */
+export function startFireworks(box: HTMLElement) {
+  const cols = ['#FFD166', '#FF8FA3', '#8FD8FF', '#86E3B0', '#C9B8FF', '#FFF3C4'];
+  let k = 0;
+  const shoot = () => {
+    const W = box.clientWidth, H = box.clientHeight;
+    firework(box, 40 + Math.random() * (W - 80), 60 + Math.random() * H * 0.4, cols[k++ % cols.length]);
+  };
+  shoot();
+  const t = setInterval(shoot, reducedMotion() ? 1600 : 650);
+  return () => clearInterval(t);
+}

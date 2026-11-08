@@ -3,13 +3,14 @@ import { warmUpVoices } from '../../shared/speech';
 import { confetti, flyStar } from '../../shared/fx';
 import { buildOptions } from './data';
 import { LAST, LEVELS, goalOf } from './levels';
-import { answer, dots, knownCount, loadPath, nextCard, optionPools, resetProgress, resting, savePath, selIdx, startFrom, type PathState } from './progress';
+import { answer, dots, finishedOn, knownCount, loadPath, nextCard, optionPools, resetProgress, today, resting, savePath, selIdx, startFrom, type PathState } from './progress';
 import { preloadCard, speakCard, stopAll } from './speak';
 import Path from './Path';
 import Intro from './Intro';
 import Quiz, { type Round } from './Quiz';
 import LevelDone from './LevelDone';
 import Settings from './Settings';
+import Finale from './Finale';
 
 /** In child mode, say the card out loud as soon as it appears. */
 const AUTO_PLAY = true;
@@ -20,6 +21,7 @@ export default function ReadingModule() {
   const [round, setRound] = useState<Round | null>(null);
   const [done, setDone] = useState<number | null>(null);
   const [justDone, setJustDone] = useState<number | null>(null);
+  const [finale, setFinale] = useState(false);
   const stateRef = useRef(state);
   stateRef.current = state;
   const levelRef = useRef(0);
@@ -62,7 +64,7 @@ export default function ReadingModule() {
     setState(s);
     missRun.current = right ? 0 : missRun.current + 1;
     if (right && fxRef.current && counterRef.current) flyStar(fxRef.current, counterRef.current);
-    if (finished) setTimeout(() => setDone(i), 1300);
+    if (finished) setTimeout(() => (i === LAST - 1 ? setFinale(true) : setDone(i)), 1300);
   };
 
   const toPath = () => {
@@ -85,6 +87,7 @@ export default function ReadingModule() {
           start={start}
           celebrate={celebrate}
           openSettings={() => setScreen('settings')}
+          openFinale={() => setFinale(true)}
         />
       )}
       {screen === 'settings' && (
@@ -132,6 +135,22 @@ export default function ReadingModule() {
             setScreen('path');
           }}
           onStay={() => setDone(null)}
+        />
+      )}
+      {finale && (
+        <Finale
+          stars={state.stars}
+          islands={LAST}
+          date={finishedOn(state) ?? today()}
+          onEnter={() => {
+            setFinale(false);
+            start(LAST);
+          }}
+          onClose={() => {
+            stopAll();
+            setFinale(false);
+            setScreen('path');
+          }}
         />
       )}
     </>
